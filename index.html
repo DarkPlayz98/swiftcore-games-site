@@ -3,444 +3,290 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SwiftCore Games · Roblox game studio</title>
-    <meta name="description" content="SwiftCore Games is a small Roblox game studio run by Ahnaf4545. Makers of Edge Of Honors and Speed Blocks." />
+    <title>SwiftCore Games</title>
+    <meta name="description" content="We're SwiftCore Games, a small Roblox studio. We make Edge Of Honors and Speed Blocks." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&display=swap"
     />
     <link rel="stylesheet" href="hark.css" />
     <link rel="stylesheet" href="hark-hero.css" />
     <style>
       :root, :root[data-theme="dark"] {
         color-scheme: light;
-        --x-bg: #F4F3EF;
-        --x-ink: #111;
-        --x-ink-2: #55544f;
-        --x-line: #dcdad3;
-        --x-card: #fbfaf7;
-        --x-blue: #1E6BFF;
-        --x-blue-ink: #0B4FD6;
-        --x-mono: "JetBrains Mono", ui-monospace, monospace;
-        --sans: "Space Grotesk", -apple-system, "Helvetica Neue", sans-serif;
-        --fill-primary-on: var(--x-bg);
-        --text-primary: var(--x-ink);
-        --text-secondary: var(--x-ink-2);
-        --fill-primary: var(--x-ink);
-        --page-max: 1180px;
+        --x-ink: #000;
+        --x-grey: #555;
+        --x-cyan: #19C3FF;
+        --sans: "Archivo", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+        --fill-primary-on: #fff;
+        --fill-primary: #000;
+        --text-primary: #000;
+        --text-secondary: #555;
+        --page-max: 1200px;
       }
-      body { background: var(--x-bg); color: var(--x-ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+      body { background: #fff; color: var(--x-ink); font: 400 17px/1.55 var(--sans); }
       .page { padding-block: 0; gap: 0; }
       .main { gap: 0; }
+      :focus-visible { outline: 3px solid var(--x-cyan); outline-offset: 2px; border-radius: 0; }
 
       /* top bar */
-      .x-bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
-        height: 64px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter);
-        background: var(--x-bg); border-bottom: 1px solid var(--x-line); }
-      .x-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 18px; letter-spacing: -0.02em; min-height: var(--tap); }
-      .x-brand img { width: 24px; height: 24px; border-radius: 6px; }
-      .x-links { display: flex; gap: 4px; margin-left: auto; align-items: center; }
-      .x-links a:not(.x-btn) { display: none; text-decoration: none; padding: 10px 12px; font-size: 15px; color: var(--x-ink-2); border-radius: 8px; }
-      .x-links a:not(.x-btn):hover { color: var(--x-ink); }
-      @media (min-width: 720px) { .x-links a:not(.x-btn) { display: inline-flex; } }
+      .x-bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 8px; min-height: 60px;
+        margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); background: #fff; border-bottom: 2px solid var(--x-ink); }
+      .x-brand { display: flex; align-items: center; gap: 10px; min-height: var(--tap); text-decoration: none;
+        font-weight: 900; font-size: 18px; letter-spacing: -0.02em; }
+      .x-brand img { width: 28px; height: 28px; }
+      .x-bar nav { display: flex; margin-left: auto; }
+      .x-bar nav a { display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 10px; font-weight: 700; font-size: 15px; text-decoration: none; }
+      .x-bar nav a:hover { text-decoration: underline; text-decoration-color: var(--x-cyan); text-decoration-thickness: 3px; text-underline-offset: 6px; }
 
-      /* buttons */
-      .x-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--tap);
-        padding: 0 18px; border-radius: 10px; border: 1.5px solid var(--x-ink); background: transparent; color: var(--x-ink);
-        font: 500 15px/1 var(--sans); text-decoration: none; white-space: nowrap;
-        transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out); }
-      .x-btn:hover { transform: translateY(-2px); box-shadow: 0 3px 0 var(--x-ink); }
-      .x-btn--blue { background: var(--x-blue); border-color: var(--x-blue); color: #fff; }
-      .x-btn--blue:hover { box-shadow: 0 3px 0 var(--x-blue-ink); }
-      .x-btn--ink { background: var(--x-ink); color: var(--x-bg); }
-      .x-btn--sm { min-height: var(--tap); padding: 0 14px; font-size: 14px; }
-      .x-btn--lg { min-height: 56px; padding: 0 28px; font-size: 17px; }
-      .x-row { display: flex; flex-wrap: wrap; gap: 10px; }
-
-      /* type */
-      .x-mono { font-family: var(--x-mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--x-ink-2); }
-      .x-sec { padding-block: 72px; border-top: 1px solid var(--x-line); scroll-margin-top: 64px; }
-      .x-sec__head { display: grid; gap: 12px; margin-bottom: 40px; max-width: 720px; }
-      .x-sec__head h2 { font-size: clamp(30px, 5vw, 44px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 600; }
-      .x-lead { font-size: 18px; color: var(--x-ink-2); max-width: 60ch; }
-      .x-num { font-family: var(--x-mono); font-weight: 500; }
-      .x-tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--x-mono); font-size: 12px; letter-spacing: 0.04em;
-        text-transform: uppercase; padding: 4px 8px; border: 1px solid currentColor; border-radius: 6px; line-height: 1.2; }
-      .x-tag--blue { color: var(--x-blue-ink); }
-      .x-link { color: var(--x-blue-ink); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+      /* buttons and links */
+      .x-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+      .x-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px;
+        border: 2px solid var(--x-ink); border-radius: 2px; background: #fff; color: var(--x-ink);
+        font: 800 16px/1 var(--sans); text-decoration: none; white-space: nowrap; transition: background-color 120ms, color 120ms; }
+      .x-btn:hover { background: var(--x-ink); color: #fff; }
+      .x-btn--solid { background: var(--x-ink); color: #fff; }
+      .x-btn--solid:hover { background: #fff; color: var(--x-ink); }
+      .x-btn--cyan { background: var(--x-cyan); border-color: var(--x-cyan); color: var(--x-ink); }
+      .x-btn--cyan:hover { background: #fff; border-color: #fff; color: var(--x-ink); }
+      .x-a { color: var(--x-ink); font-weight: 700; text-decoration: underline; text-decoration-color: var(--x-cyan);
+        text-decoration-thickness: 3px; text-underline-offset: 4px; }
+      .x-a:hover { background: var(--x-cyan); }
+      .x-links { display: flex; flex-wrap: wrap; gap: 0 24px; margin-top: 16px; }
+      .x-links a { display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap); min-width: var(--tap); }
+      .x-a--inline { display: inline-flex; align-items: center; min-height: var(--tap); vertical-align: middle; }
 
       /* hero */
-      .x-hero { display: grid; gap: 24px; padding-block: 48px 64px; align-items: center; }
-      .x-hero h1 { font-size: clamp(48px, 10vw, 104px); line-height: 0.92; letter-spacing: -0.05em; font-weight: 700; }
-      .x-hero h1 span { display: block; color: var(--x-blue); }
-      .x-hero__copy { display: grid; gap: 20px; }
-      .x-hero__sub { font-size: 19px; color: var(--x-ink-2); max-width: 34ch; }
-      .x-stage { position: relative; aspect-ratio: 1 / 1; max-height: 520px; width: 100%; border: 1px solid var(--x-line);
-        border-radius: 20px; background: radial-gradient(120% 90% at 50% 20%, #fbfaf7 0%, #eceae3 100%); overflow: hidden; }
+      .x-hero { display: grid; gap: 8px; padding-block: 16px 56px; }
+      .x-stage { position: relative; order: -1; width: 100%; aspect-ratio: 1 / 0.85; }
       .x-stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; touch-action: pan-y; }
-      .x-stage__fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+      .x-stage__fallback { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
       .x-stage.is-fallback .x-stage__fallback { display: block; }
-      .x-stage__label { position: absolute; left: 16px; bottom: 14px; z-index: 2; }
+      .x-word { margin: 0; font-weight: 900; font-size: clamp(72px, 22vw, 150px); line-height: 0.82; letter-spacing: -0.05em; }
+      .x-word span { display: block; }
+      .x-word small { display: block; margin-top: 16px; font-size: clamp(20px, 3vw, 26px); font-weight: 800; letter-spacing: 0.04em; line-height: 1; }
+      .x-hero__text { display: grid; gap: 24px; align-content: center; }
+      .x-hero__text p { font-size: 19px; max-width: 34ch; }
       @media (min-width: 900px) {
-        .x-hero { grid-template-columns: 1.05fr 1fr; gap: 48px; padding-block: 72px 88px; }
-        .x-stage { aspect-ratio: 4 / 4.2; }
+        .x-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 24px; padding-block: 40px 80px; align-items: center; }
+        .x-stage { order: 0; aspect-ratio: 1 / 1; }
+        .x-word { font-size: clamp(96px, 11vw, 150px); }
       }
 
-      /* game blocks */
-      .x-game { display: grid; gap: 32px; }
-      .x-game__title { display: flex; align-items: center; gap: 16px; }
-      .x-game__title img { width: 64px; height: 64px; border-radius: 14px; border: 1px solid var(--x-line); }
-      .x-game__title h3 { font-size: clamp(26px, 4vw, 34px); letter-spacing: -0.03em; line-height: 1.05; font-weight: 600; }
-      .x-game__title div { display: grid; gap: 6px; justify-items: start; }
-      .x-strip { display: grid; gap: 12px; perspective: 1000px; }
-      @media (min-width: 720px) { .x-strip { grid-template-columns: 1fr 1fr; } }
-      .x-shot { margin: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--x-line); background: var(--x-card);
-        transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
-        transform-style: preserve-3d; will-change: transform; }
-      .x-shot.is-tilting { transition: transform 80ms linear; box-shadow: 0 18px 30px -18px rgba(17,17,17,0.35); }
-      .x-shot img { width: 100%; aspect-ratio: 16 / 8.5; object-fit: cover; }
-      .x-shot figcaption { padding: 10px 14px; }
-      .x-cols { display: grid; gap: 32px; }
-      @media (min-width: 900px) { .x-cols { grid-template-columns: 1.2fr 1fr; gap: 56px; } }
-      .x-pitch { font-size: 20px; line-height: 1.45; letter-spacing: -0.01em; max-width: 46ch; }
-      .x-chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 12px 0 0; }
-      .x-chips li { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--x-line); background: var(--x-card); font-size: 14px;
-        box-shadow: 0 2px 0 var(--x-line); }
-      .x-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--x-ink); }
-      @media (min-width: 720px) { .x-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-      .x-facts > div { padding: 14px 12px 16px 0; border-bottom: 1px solid var(--x-line); display: grid; gap: 4px; align-content: start; }
-      .x-facts dt { font-family: var(--x-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--x-ink-2); }
-      .x-facts dd { margin: 0; font-family: var(--x-mono); font-size: 20px; font-weight: 500; letter-spacing: -0.02em; }
-      .x-facts dd small { font-size: 13px; color: var(--x-ink-2); font-weight: 400; }
-      .x-note { border-left: 3px solid var(--x-blue); padding: 4px 0 4px 18px; display: grid; gap: 8px; }
-      .x-note p { color: var(--x-ink-2); }
-      .x-note strong { color: var(--x-ink); font-weight: 600; }
-      .x-stack { display: grid; gap: 24px; align-content: start; }
+      /* sections */
+      .x-sec { padding-block: 56px; border-top: 2px solid var(--x-ink); scroll-margin-top: 60px; }
+      .x-sec > h2, .x-band h2 { font-weight: 900; font-size: clamp(36px, 7vw, 64px); line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 24px; }
+      .x-plain { max-width: 60ch; }
+      .x-plain p + p { margin-top: 14px; }
+      .x-grey { color: var(--x-grey); }
 
-      .x-second { display: grid; gap: 28px; border: 1px solid var(--x-line); border-radius: 20px; padding: 20px; background: var(--x-card); }
-      @media (min-width: 900px) { .x-second { grid-template-columns: 1fr 1fr; padding: 28px; gap: 40px; align-items: center; } }
-      .x-second .x-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      /* Edge Of Honors */
+      .x-tilt { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 300ms var(--ease-out); will-change: transform; }
+      .x-tilt.is-tilting { transition: transform 80ms linear; }
+      .x-big { position: relative; margin: 0; border: 2px solid var(--x-ink); background: var(--x-ink); }
+      .x-big img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+      .x-big h2 { position: absolute; left: 0; bottom: 0; margin: 0; padding: 10px 16px 12px; background: var(--x-ink); color: #fff;
+        font-weight: 900; font-size: clamp(26px, 6vw, 56px); line-height: 1; letter-spacing: -0.035em; }
+      .x-eoh { display: grid; gap: 32px; margin-top: 32px; }
+      .x-eoh h3 { font-weight: 900; font-size: 24px; letter-spacing: -0.02em; margin: 32px 0 8px; }
+      .x-shot { margin: 0; }
+      .x-shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border: 2px solid var(--x-ink); }
+      .x-shot figcaption { margin-top: 8px; font-size: 14px; color: var(--x-grey); }
+      @media (min-width: 720px) { .x-big img { aspect-ratio: 16 / 8; } }
+      @media (min-width: 900px) { .x-eoh { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 48px; } }
+
+      /* Speed Blocks */
+      .x-row { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px 20px; margin-top: 56px; padding: 20px; border: 2px solid var(--x-ink); }
+      .x-row__icon { width: 64px; height: 64px; border: 2px solid var(--x-ink); }
+      .x-row h2 { font-weight: 900; font-size: 32px; line-height: 1; letter-spacing: -0.03em; margin-bottom: 10px; }
+      .x-row p + p { margin-top: 10px; }
+      .x-row__shot { grid-column: 1 / -1; }
+      .x-row__shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border: 2px solid var(--x-ink); }
+      .x-row .x-links { margin-top: 8px; }
+      @media (min-width: 900px) {
+        .x-row { grid-template-columns: 72px minmax(0, 1fr) 320px; padding: 24px; gap: 24px; }
+        .x-row__icon { width: 72px; height: 72px; }
+        .x-row__shot { grid-column: auto; }
+      }
 
       /* workshop */
-      .x-grid { display: grid; gap: 12px; }
-      @media (min-width: 720px) { .x-grid--2 { grid-template-columns: 1fr 1fr; } .x-grid--4 { grid-template-columns: repeat(2, 1fr); } }
-      @media (min-width: 1000px) { .x-grid--4 { grid-template-columns: repeat(4, 1fr); } }
-      .x-card { border: 1px solid var(--x-line); border-radius: 16px; padding: 22px; background: var(--x-card); display: grid; gap: 10px; align-content: start;
-        transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 300ms var(--ease-out); }
-      .x-card h3 { font-size: 22px; letter-spacing: -0.02em; font-weight: 600; line-height: 1.15; }
-      .x-card p { color: var(--x-ink-2); }
-      .x-card--wip { border-style: dashed; background: transparent; }
-      .x-tilt-wrap { perspective: 900px; }
-      .x-aside { margin-top: 20px; color: var(--x-ink-2); }
-      .x-aside .x-link { display: inline-flex; align-items: center; min-height: var(--tap); }
+      .x-bench { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--x-ink); }
+      .x-bench li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 16px 0; border-bottom: 2px solid var(--x-ink);
+        font-weight: 800; font-size: clamp(20px, 3.4vw, 30px); line-height: 1.15; letter-spacing: -0.02em; }
+      .x-bench li span { font-weight: 400; }
+      .x-bench small { font: 400 15px/1.4 var(--sans); letter-spacing: 0; color: var(--x-grey); }
+      .x-bench + p { margin-top: 20px; }
 
-      /* studio */
-      .x-member .x-mono { color: var(--x-blue-ink); }
-      .x-member--retired { opacity: 0.75; }
-      .x-member--retired .x-mono { color: var(--x-ink-2); }
-      .x-kv { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 24px; }
-      .x-kv span { font-family: var(--x-mono); font-size: 13px; color: var(--x-ink-2); }
-      .x-kv b { color: var(--x-ink); font-weight: 500; }
+      /* team */
+      .x-team { list-style: none; margin: 24px 0 0; padding: 0; max-width: 640px; }
+      .x-team li { padding: 10px 0; border-bottom: 1px solid var(--x-ink); font-size: 19px; }
+      .x-team b { font-weight: 800; }
+      .x-team .is-gone { color: var(--x-grey); }
 
       /* community */
-      .x-community { display: grid; gap: 32px; }
-      @media (min-width: 900px) { .x-community { grid-template-columns: 1fr 1fr; gap: 56px; } }
-      .x-discord { border-radius: 20px; background: var(--x-blue); color: #fff; padding: 28px; display: grid; gap: 18px; align-content: start; }
-      .x-discord { background: var(--x-blue-ink); }
-      .x-discord .x-mono { color: #fff; }
-      .x-discord__fig { font-family: var(--x-mono); font-size: clamp(56px, 10vw, 88px); line-height: 1; letter-spacing: -0.05em; font-weight: 500; }
-      .x-discord .x-btn--lg { background: #fff; color: var(--x-ink); border-color: #fff; justify-self: start; }
-      .x-discord .x-btn--lg:hover { box-shadow: 0 3px 0 var(--x-blue-ink); }
-      .x-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--x-ink); }
-      .x-list li { padding: 12px 0; border-bottom: 1px solid var(--x-line); display: flex; gap: 14px; }
-      .x-list li::before { content: counter(list-item, decimal-leading-zero); font-family: var(--x-mono); font-size: 12px; color: var(--x-ink-2); padding-top: 4px; }
+      .x-band { margin-inline: calc(50% - 50vw); padding: 64px var(--gutter); background: var(--x-ink); color: #fff; scroll-margin-top: 60px; }
+      .x-band__in { max-width: calc(var(--page-max) - 2 * var(--gutter)); margin: 0 auto; display: grid; gap: 20px; justify-items: start; }
+      .x-band h2 { margin: 0; max-width: 15ch; font-size: clamp(38px, 7.5vw, 76px); }
+      .x-band p { color: #c8c8c8; max-width: 60ch; }
+      .x-band .x-btn { min-height: 56px; padding: 0 28px; font-size: 18px; }
 
       /* footer */
-      .x-foot { margin-inline: calc(50% - 50vw); background: var(--x-ink); color: #e9e8e3; padding: 48px var(--gutter) 40px; }
-      .x-foot__in { max-width: calc(var(--page-max) - 2 * var(--gutter)); margin: 0 auto; display: grid; gap: 24px; }
-      @media (min-width: 720px) { .x-foot__in { grid-template-columns: 1fr auto; align-items: end; } }
-      .x-foot .x-brand { color: #fff; }
-      .x-foot p { color: #a9a8a2; font-size: 14px; margin-top: 8px; }
-      .x-foot nav { display: flex; flex-wrap: wrap; gap: 4px 20px; }
-      .x-foot nav a { color: #fff; text-decoration: none; min-height: var(--tap); display: inline-flex; align-items: center; font-size: 15px; }
-      .x-foot nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+      .x-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; padding-block: 16px 24px; font-size: 13px; color: var(--x-grey); }
+      .x-foot a { display: inline-flex; align-items: center; min-height: var(--tap); color: var(--x-ink); }
+      .x-foot p { margin-right: auto; }
 
-      /* reveal */
-      .js .x-reveal { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
-      .js .x-reveal.is-in { opacity: 1; transform: none; }
-      @media (prefers-reduced-motion: reduce) {
-        .js .x-reveal { opacity: 1; transform: none; transition: none; }
-        .x-btn, .x-shot, .x-card { transition: none; }
-        .x-btn:hover { transform: none; }
-      }
+      @media (prefers-reduced-motion: reduce) { .x-tilt, .x-btn { transition: none; } }
     </style>
   </head>
   <body>
     <div class="page" id="top">
       <header class="x-bar">
-        <a class="x-brand" href="#top"><img src="swiftcore-logo.png" alt="" width="24" height="24" />SwiftCore</a>
-        <nav class="x-links" aria-label="Main">
+        <a class="x-brand" href="#top"><img src="swiftcore-logo.png" alt="" width="28" height="28" />SwiftCore</a>
+        <nav aria-label="Main">
           <a href="#games">Games</a>
-          <a href="#studio">Studio</a>
-          <a href="#community">Community</a>
-          <a class="x-btn x-btn--blue x-btn--sm" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Join Discord</a>
+          <a href="#team">Team</a>
+          <a href="#community">Discord</a>
         </nav>
       </header>
 
       <main class="main">
         <section class="x-hero" aria-labelledby="hero-title">
-          <div class="x-hero__copy">
-            <p class="x-mono">Roblox game studio · est. 2025</p>
-            <h1 id="hero-title">SwiftCore <span>Games</span></h1>
-            <p class="x-hero__sub">Simple, immersive Roblox games, built by Ahnaf4545 and a small crew.</p>
-            <div class="x-row">
-              <a class="x-btn x-btn--ink" href="https://www.roblox.com/games/103283901827758/Edge-Of-Honors" target="_blank" rel="noopener">Play Edge Of Honors</a>
-              <a class="x-btn" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Join the Discord</a>
+          <div class="x-hero__text">
+            <h1 class="x-word" id="hero-title"><span>SWIFT</span><span>CORE</span><small>GAMES</small></h1>
+            <p>We make Roblox games. Right now that's mostly Edge Of Honors. Small team, run by Ahnaf4545, going since June 2025.</p>
+            <div class="x-btns">
+              <a class="x-btn x-btn--solid" href="https://www.roblox.com/games/103283901827758/Edge-Of-Honors" target="_blank" rel="noopener">Play Edge Of Honors</a>
+              <a class="x-btn" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Discord</a>
             </div>
           </div>
           <div class="x-stage" id="stage">
-            <img class="x-stage__fallback" src="eoh-shot1.png" alt="Edge Of Honors gameplay: two players with swords, 'Play with a friend!'" />
-            <p class="x-stage__label x-mono" aria-hidden="true">Blocks + one sword</p>
+            <svg class="x-stage__fallback" viewBox="0 0 400 340" role="img" aria-label="Three toy blocks stacked, one of them cyan">
+              <g stroke="#000" stroke-width="3" stroke-linejoin="round">
+                <rect x="70" y="200" width="160" height="60" fill="#fff" />
+                <rect x="230" y="200" width="90" height="60" fill="#111" />
+                <rect x="140" y="140" width="120" height="60" fill="#19C3FF" />
+                <rect x="160" y="128" width="26" height="12" fill="#19C3FF" />
+                <rect x="214" y="128" width="26" height="12" fill="#19C3FF" />
+                <rect x="90" y="188" width="26" height="12" fill="#fff" />
+                <rect x="260" y="188" width="26" height="12" fill="#111" />
+              </g>
+            </svg>
           </div>
         </section>
 
-        <section class="x-sec" id="games">
-          <div class="x-sec__head x-reveal">
-            <p class="x-mono">01 · Featured game</p>
+        <section class="x-sec" id="games" style="border-top:0;padding-top:0">
+          <figure class="x-big x-tilt" data-tilt>
+            <img src="eoh-shot1.png" alt="Two players with swords in Edge Of Honors, with the text 'Play with a friend!'" />
             <h2>Edge Of Honors</h2>
-          </div>
-          <div class="x-game">
-            <div class="x-game__title x-reveal">
-              <img src="eoh-icon.png" alt="Edge Of Honors icon" width="64" height="64" />
-              <div>
-                <h3>Sword fights with friends</h3>
-                <span class="x-tag x-tag--blue">Beta</span>
-              </div>
-            </div>
+          </figure>
 
-            <div class="x-strip x-reveal">
-              <figure class="x-shot" data-tilt>
-                <img src="eoh-shot2.png" alt="Edge Of Honors map overview" loading="lazy" />
-                <figcaption class="x-mono">Map</figcaption>
-              </figure>
-              <figure class="x-shot" data-tilt>
-                <img src="eoh-shot1.png" alt="Edge Of Honors gameplay with 'Play with a friend!' text" loading="lazy" />
-                <figcaption class="x-mono">Play with a friend</figcaption>
-              </figure>
-            </div>
+          <div class="x-eoh">
+            <div class="x-plain">
+              <p>Sword fighting with your friends. You hit people, get money, buy better swords. Whatever sword you've got equipped follows you into every server. It's still in beta.</p>
+              <p>Swords right now: Basic Sword, Fire Sword, StormCutter Sword, Golden Sword, Sand Sword, Bone Sword and Block Sword.</p>
+              <p>As of 22 Nov 2026 it's had 2,040 visits, 37 likes (and 1 dislike) and 127 favourites. Servers hold 20 players, avatars are R6. First published 17 Feb 2025, last updated 21 Nov 2026.</p>
 
-            <div class="x-cols">
-              <div class="x-stack x-reveal">
-                <p class="x-pitch">Fight for honor with your friends. Slash your opponents, earn money, and equip better swords. Your equipped sword is saved across every server.</p>
-                <div>
-                  <p class="x-mono">Swords in the game</p>
-                  <ul class="x-chips">
-                    <li>Basic Sword</li><li>Fire Sword</li><li>StormCutter Sword</li><li>Golden Sword</li>
-                    <li>Sand Sword</li><li>Bone Sword</li><li>Block Sword</li>
-                  </ul>
-                </div>
-                <div class="x-row">
-                  <a class="x-btn x-btn--ink" href="https://www.roblox.com/games/103283901827758/Edge-Of-Honors" target="_blank" rel="noopener">Play on Roblox</a>
-                  <a class="x-btn" href="https://youtu.be/yWn4dREqG4k" target="_blank" rel="noopener">Watch the Update 8 trailer</a>
-                  <a class="x-btn" href="https://edgeofhonors.netlify.app/" target="_blank" rel="noopener">Game site</a>
-                </div>
-              </div>
-              <div class="x-note x-reveal">
-                <p class="x-mono">Status</p>
-                <p><strong>Being rebuilt.</strong> Since May 2026 every system is being reworked to Roblox's newer standards: new maps stay, older maps get a rework, swords are being remodelled, and a server-side sword system is on the way. The Golden Arena is one of its maps.</p>
-              </div>
-            </div>
+              <h3>What's happening</h3>
+              <p>Since May 2026 we've been rebuilding every system to Roblox's newer standards. New maps stay, older maps get reworked, swords are getting remodelled, and a server-side sword system is on the way. The Golden Arena is one of the maps.</p>
 
-            <div class="x-reveal">
-              <dl class="x-facts">
-                <div><dt>Visits</dt><dd>2,040</dd></div>
-                <div><dt>Favourites</dt><dd>127</dd></div>
-                <div><dt>Likes / dislikes</dt><dd>37 <small>/ 1</small></dd></div>
-                <div><dt>Server size</dt><dd>20 <small>players max</small></dd></div>
-                <div><dt>Avatars</dt><dd>R6</dd></div>
-                <div><dt>First published</dt><dd>17 Feb 2025</dd></div>
-                <div><dt>Last updated</dt><dd>21 Nov 2026</dd></div>
-              </dl>
-              <p class="x-mono" style="margin-top:10px">Figures as of 22 Nov 2026</p>
+              <div class="x-links">
+                <a class="x-a" href="https://www.roblox.com/games/103283901827758/Edge-Of-Honors" target="_blank" rel="noopener">Play on Roblox</a>
+                <a class="x-a" href="https://youtu.be/yWn4dREqG4k" target="_blank" rel="noopener">Update 8 trailer</a>
+                <a class="x-a" href="https://edgeofhonors.netlify.app/" target="_blank" rel="noopener">Game site</a>
+              </div>
             </div>
+            <figure class="x-shot x-tilt" data-tilt>
+              <img src="eoh-shot2.png" alt="Overview of an Edge Of Honors map" loading="lazy" />
+              <figcaption>One of the maps, from above.</figcaption>
+            </figure>
           </div>
-        </section>
 
-        <section class="x-sec" id="speed-blocks" aria-labelledby="sb-title">
-          <div class="x-sec__head x-reveal">
-            <p class="x-mono">02 · Also from the studio</p>
-            <h2 id="sb-title">Speed Blocks</h2>
-          </div>
-          <div class="x-second x-reveal">
-            <div class="x-tilt-wrap">
-              <figure class="x-shot" data-tilt>
-                <img src="speedblocks-shot.png" alt="Speed Blocks: players racing across speed pads" loading="lazy" />
-              </figure>
-            </div>
-            <div class="x-stack">
-              <div class="x-game__title">
-                <img src="speedblocks-icon.png" alt="Speed Blocks icon" width="64" height="64" loading="lazy" />
-                <div>
-                  <h3>Speed Blocks</h3>
-                  <span class="x-mono">Launched 30 Mar 2026 · built on mobile</span>
-                </div>
-              </div>
-              <p class="x-pitch">Step on pads and reach insane speeds. Dash, jump and race across the map with friends, and try not to fall off.</p>
-              <div class="x-note">
-                <p class="x-mono">Latest · Update 1.1.4 · 6 Oct 2026</p>
-                <p>Map optimised for better performance, plus bug fixes for smoother, fairer runs.</p>
-              </div>
-              <dl class="x-facts">
-                <div><dt>Visits</dt><dd>195</dd></div>
-                <div><dt>Server size</dt><dd>12 <small>max</small></dd></div>
-                <div><dt>Avatars</dt><dd>R15</dd></div>
-              </dl>
-              <div class="x-row">
-                <a class="x-btn x-btn--ink" href="https://www.roblox.com/games/73601802773051/Speed-Blocks" target="_blank" rel="noopener">Play</a>
-                <a class="x-btn" href="https://youtu.be/Tf8yXrwepII" target="_blank" rel="noopener">Showcase video</a>
+          <article class="x-row" id="speed-blocks" aria-labelledby="sb-title">
+            <img class="x-row__icon" src="speedblocks-icon.png" alt="Speed Blocks icon" width="72" height="72" loading="lazy" />
+            <div>
+              <h2 id="sb-title">Speed Blocks</h2>
+              <p>Step on pads and go stupid fast. Dash, jump and race your friends across the map, and try not to fall off.</p>
+              <p class="x-grey">Out since 30 Mar 2026, and yes, we built it on mobile. 195 visits, 12-player servers, R15.</p>
+              <p><b>Update 1.1.4</b> (6 Oct 2026): the map's optimised so it runs better, plus bug fixes for smoother, fairer runs.</p>
+              <div class="x-links">
+                <a class="x-a" href="https://www.roblox.com/games/73601802773051/Speed-Blocks" target="_blank" rel="noopener">Play</a>
+                <a class="x-a" href="https://youtu.be/Tf8yXrwepII" target="_blank" rel="noopener">Showcase video</a>
               </div>
             </div>
-          </div>
+            <figure class="x-row__shot" style="margin:0">
+              <img src="speedblocks-shot.png" alt="Players racing across speed pads in Speed Blocks" loading="lazy" />
+            </figure>
+          </article>
         </section>
 
         <section class="x-sec" id="workshop">
-          <div class="x-sec__head x-reveal">
-            <p class="x-mono">03 · In the workshop</p>
-            <h2>Two more games on the bench.</h2>
-          </div>
-          <div class="x-grid x-grid--2">
-            <div class="x-tilt-wrap x-reveal">
-              <article class="x-card x-card--wip" data-tilt>
-                <span class="x-tag">In development</span>
-                <h3>Terminal Build</h3>
-                <p>Teased 31 Oct 2026 as almost done.</p>
-              </article>
-            </div>
-            <div class="x-tilt-wrap x-reveal">
-              <article class="x-card x-card--wip" data-tilt>
-                <span class="x-tag">In development</span>
-                <h3>Brookhaven-style roleplay game</h3>
-                <p>Teased Aug 2026.</p>
-              </article>
-            </div>
-          </div>
-          <p class="x-aside x-reveal">The team also shared <a class="x-link" href="https://create.roblox.com/store/asset/86116556258301/Eclipse-Animator" target="_blank" rel="noopener">Eclipse Animator</a>, a free Roblox Studio animation plugin.</p>
+          <h2>On the bench</h2>
+          <ul class="x-bench">
+            <li>Terminal Build <span>— almost done</span> <small>teased 31 Oct 2026</small></li>
+            <li>A Brookhaven-style RP game <span>— early</span> <small>teased Aug 2026</small></li>
+          </ul>
+          <p>We also put out <a class="x-a x-a--inline" href="https://create.roblox.com/store/asset/86116556258301/Eclipse-Animator" target="_blank" rel="noopener">Eclipse Animator</a>, a free animation plugin for Roblox Studio.</p>
         </section>
 
-        <section class="x-sec" id="studio">
-          <div class="x-sec__head x-reveal">
-            <p class="x-mono">04 · Studio</p>
-            <h2>A small crew making simple, immersive games.</h2>
-            <p class="x-lead">SwiftCore Games is a dynamic Roblox development group focused on simple, immersive and innovative experiences.</p>
-          </div>
-          <div class="x-grid x-grid--4">
-            <div class="x-tilt-wrap x-reveal"><article class="x-card x-member" data-tilt>
-              <p class="x-mono">Owner</p><h3>Ahnaf4545</h3><p>Owner &amp; lead developer</p>
-            </article></div>
-            <div class="x-tilt-wrap x-reveal"><article class="x-card x-member" data-tilt>
-              <p class="x-mono">Phantom Authority</p><h3>Zåkµrµ <small>(zanund)</small></h3><p>Scripting</p>
-            </article></div>
-            <div class="x-tilt-wrap x-reveal"><article class="x-card x-member" data-tilt>
-              <p class="x-mono">Moderation</p><h3>DarkLord_ALT</h3><p>Senior Moderator</p>
-            </article></div>
-            <div class="x-tilt-wrap x-reveal"><article class="x-card x-member x-member--retired" data-tilt>
-              <p class="x-mono">Retired</p><h3>red_king</h3><p>Retired Developer. Left Sep 2026 for university.</p>
-            </article></div>
-          </div>
-          <div class="x-kv x-reveal">
-            <span>Roblox group <b>SwiftCore Games</b></span>
-            <span>Members <b>34</b></span>
-            <span>Founded <b>June 2025</b></span>
+        <section class="x-sec" id="team">
+          <h2>Who's here</h2>
+          <p class="x-plain">SwiftCore Games is a Roblox group with 34 members, started June 2025. We try to keep our games simple and fun to actually play.</p>
+          <ul class="x-team">
+            <li><b>Ahnaf4545</b> — owner, lead dev</li>
+            <li><b>Zåkµrµ</b> (zanund) — scripting, Phantom Authority</li>
+            <li><b>DarkLord_ALT</b> — senior moderator</li>
+            <li class="is-gone"><b>red_king</b> — retired developer, left Sep 2026 for university</li>
+          </ul>
+          <div class="x-links">
+            <a class="x-a" href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
+            <a class="x-a" href="https://www.youtube.com/channel/UChJkJqyFkQld5ALfobTehIA" target="_blank" rel="noopener">YouTube (Ahnaf4545)</a>
           </div>
         </section>
 
-        <section class="x-sec" id="community">
-          <div class="x-sec__head x-reveal">
-            <p class="x-mono">05 · Community</p>
-            <h2>Hang out where the builds show up first.</h2>
-          </div>
-          <div class="x-community">
-            <div class="x-discord x-reveal">
-              <p class="x-mono">Discord · SwiftCore Games</p>
-              <p class="x-discord__fig">134</p>
-              <p>members. Announcements, sneak peeks of upcoming builds, polls, giveaways, videos and self-roles.</p>
-              <a class="x-btn x-btn--lg" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Join the Discord</a>
-            </div>
-            <div class="x-stack x-reveal">
-              <div>
-                <p class="x-mono" style="margin-bottom:12px">House rules</p>
-                <ol class="x-list">
-                  <li>Be respectful</li>
-                  <li>No spam</li>
-                  <li>No NSFW</li>
-                  <li>No ads without owner approval</li>
-                  <li>Follow Discord's guidelines</li>
-                </ol>
-              </div>
-              <div class="x-row">
-                <a class="x-btn" href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
-                <a class="x-btn" href="https://www.youtube.com/channel/UChJkJqyFkQld5ALfobTehIA" target="_blank" rel="noopener">YouTube · Ahnaf4545</a>
-              </div>
-            </div>
+        <section class="x-band" id="community" aria-labelledby="discord-title">
+          <div class="x-band__in">
+            <h2 id="discord-title">Come hang out on Discord. 134 people already do.</h2>
+            <p>Announcements, sneak peeks of what we're building, polls, giveaways, videos and self-roles.</p>
+            <a class="x-btn x-btn--cyan" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Join the Discord</a>
+            <p>Rules: be respectful, no spam, no NSFW, no ads without the owner's ok, follow Discord's guidelines.</p>
           </div>
         </section>
       </main>
 
       <footer class="x-foot">
-        <div class="x-foot__in">
-          <div>
-            <a class="x-brand" href="#top"><img src="swiftcore-logo.png" alt="" width="24" height="24" />SwiftCore</a>
-            <p>© 2026 SwiftCore Games. Not affiliated with Roblox Corporation.</p>
-          </div>
-          <nav aria-label="Elsewhere">
-            <a href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Discord</a>
-            <a href="https://www.youtube.com/channel/UChJkJqyFkQld5ALfobTehIA" target="_blank" rel="noopener">YouTube</a>
-            <a href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
-          </nav>
-        </div>
+        <p>© 2026 SwiftCore Games. Not affiliated with Roblox Corporation.</p>
+        <a href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Discord</a>
+        <a href="https://www.youtube.com/channel/UChJkJqyFkQld5ALfobTehIA" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
       </footer>
     </div>
     <script src="hark.js"></script>
     <script>
+      /* subtle tilt on the two Edge Of Honors screenshots */
       (function () {
-        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        /* reveal on scroll */
-        var items = document.querySelectorAll(".x-reveal");
-        if ("IntersectionObserver" in window && !reduce) {
-          var io = new IntersectionObserver(function (es) {
-            es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
-          }, { rootMargin: "0px 0px -8% 0px" });
-          items.forEach(function (el) { io.observe(el); });
-        } else {
-          items.forEach(function (el) { el.classList.add("is-in"); });
-        }
-
-        /* gentle 3D tilt on cards */
-        if (!reduce) {
-          document.querySelectorAll("[data-tilt]").forEach(function (el) {
-            function move(e) {
-              var r = el.getBoundingClientRect();
-              var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-              el.style.setProperty("--ry", (x * 7).toFixed(2) + "deg");
-              el.style.setProperty("--rx", (-y * 7).toFixed(2) + "deg");
-              el.classList.add("is-tilting");
-            }
-            function reset() { el.style.setProperty("--rx", "0deg"); el.style.setProperty("--ry", "0deg"); el.classList.remove("is-tilting"); }
-            el.addEventListener("pointermove", move);
-            el.addEventListener("pointerdown", move);
-            el.addEventListener("pointerleave", reset);
-            el.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") reset(); });
-            el.addEventListener("pointercancel", reset);
-          });
-        }
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        document.querySelectorAll("[data-tilt]").forEach(function (el) {
+          function move(e) {
+            var r = el.getBoundingClientRect();
+            var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+            el.style.setProperty("--ry", (x * 4).toFixed(2) + "deg");
+            el.style.setProperty("--rx", (-y * 4).toFixed(2) + "deg");
+            el.classList.add("is-tilting");
+          }
+          function reset() { el.style.setProperty("--rx", "0deg"); el.style.setProperty("--ry", "0deg"); el.classList.remove("is-tilting"); }
+          el.addEventListener("pointermove", move);
+          el.addEventListener("pointerdown", move);
+          el.addEventListener("pointerleave", reset);
+          el.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") reset(); });
+          el.addEventListener("pointercancel", reset);
+        });
       })();
     </script>
     <script src="https://unpkg.com/three@0.149.0/build/three.min.js"></script>
     <script>
-      /* hero scene: studded blocks and a sword, Three.js r149 (global THREE) */
+      /* hero: chunky studded blocks and a low-poly sword with black outlines. Three.js r149, global THREE */
       (function () {
         var stage = document.getElementById("stage");
         function fallback() { stage.classList.add("is-fallback"); }
@@ -461,51 +307,49 @@
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
           } catch (e) { return fallback(); }
           var small = Math.min(window.innerWidth, window.innerHeight) < 700;
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2));
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
           renderer.outputEncoding = THREE.sRGBEncoding;
-          renderer.setClearColor(0x000000, 0);
+          renderer.setClearColor(0xffffff, 0);
           renderer.domElement.setAttribute("role", "img");
-          renderer.domElement.setAttribute("aria-label", "A slowly turning cluster of studded blocks with a low-poly sword resting across them");
+          renderer.domElement.setAttribute("aria-label", "Toy-like studded blocks in white, black and one cyan, with a low-poly sword lying across them");
           stage.prepend(renderer.domElement);
 
           var scene = new THREE.Scene();
-          var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-          camera.position.set(0, 2.6, 9.5);
-          camera.lookAt(0, 0.2, 0);
+          var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+          camera.position.set(0, 2.8, 10);
+          camera.lookAt(0, 0, 0);
 
-          /* r149 uses legacy light units, so these are the r160 values divided by pi */
-          scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d5cc, 0.42));
-          var sun = new THREE.DirectionalLight(0xffffff, 0.6);
-          sun.position.set(4, 7, 5);
+          /* flat-ish: strong ambient, one key light, faces read as clean tones */
+          scene.add(new THREE.AmbientLight(0xffffff, 0.62));
+          var sun = new THREE.DirectionalLight(0xffffff, 0.5);
+          sun.position.set(3, 6, 4);
           scene.add(sun);
-          var fill = new THREE.DirectionalLight(0xffffff, 0.14);
-          fill.position.set(-5, 2, -3);
-          scene.add(fill);
 
-          var mats = {
-            white: new THREE.MeshStandardMaterial({ color: 0xf1efe8, roughness: 0.85, metalness: 0 }),
-            ink: new THREE.MeshStandardMaterial({ color: 0x1b1b1b, roughness: 0.8, metalness: 0 }),
-            blue: new THREE.MeshStandardMaterial({ color: 0x1e6bff, roughness: 0.7, metalness: 0 }),
-            steel: new THREE.MeshStandardMaterial({ color: 0xd9dde3, roughness: 0.35, metalness: 0.55 }),
-            grip: new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.9 })
-          };
+          function mat(color) {
+            return new THREE.MeshLambertMaterial({ color: color, flatShading: true, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
+          }
+          var mats = { white: mat(0xffffff), black: mat(0x151515), cyan: mat(0x19c3ff) };
+          var lineDark = new THREE.LineBasicMaterial({ color: 0x000000 });
+          var lineLight = new THREE.LineBasicMaterial({ color: 0x8a8a8a });
+
+          function piece(geo, m, parent) {
+            var mesh = new THREE.Mesh(geo, m);
+            mesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo, 35), m === mats.black ? lineLight : lineDark));
+            parent.add(mesh);
+            return mesh;
+          }
 
           var group = new THREE.Group();
           scene.add(group);
-          var studGeo = new THREE.CylinderGeometry(0.17, 0.17, 0.12, small ? 14 : 20);
+          var studGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.14, small ? 12 : 16);
 
-          /* a block with a faint bevel: a slightly smaller box carries the faces, a thin shell rounds the edge look */
-          function block(w, h, d, mat, x, y, z, ry) {
+          function block(w, h, d, m, x, y, z, ry) {
             var b = new THREE.Group();
-            var core = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-            b.add(core);
-            var edge = new THREE.Mesh(new THREE.BoxGeometry(w - 0.08, h + 0.02, d - 0.08), mat);
-            b.add(edge);
+            piece(new THREE.BoxGeometry(w, h, d), m, b);
             for (var i = 0; i < Math.round(w / 0.5); i++) {
               for (var k = 0; k < Math.round(d / 0.5); k++) {
-                var s = new THREE.Mesh(studGeo, mat);
-                s.position.set(-w / 2 + 0.25 + i * 0.5, h / 2 + 0.06, -d / 2 + 0.25 + k * 0.5);
-                b.add(s);
+                var s = piece(studGeo, m, b);
+                s.position.set(-w / 2 + 0.25 + i * 0.5, h / 2 + 0.07, -d / 2 + 0.25 + k * 0.5);
               }
             }
             b.position.set(x, y, z);
@@ -514,57 +358,56 @@
             return b;
           }
 
-          block(2.0, 0.6, 1.0, mats.white, -0.55, -0.7, 0.1, 0.05);
-          block(1.0, 0.6, 1.0, mats.ink, 0.95, -0.7, -0.05, -0.08);
-          block(1.5, 0.6, 1.0, mats.blue, 0.2, -0.1, 0.0, 0.18);
-          block(1.0, 0.6, 1.0, mats.white, 1.2, -0.1, 0.45, -0.3);
-          block(1.0, 1.2, 1.0, mats.white, -1.45, -0.4, -0.75, 0.1);
-          block(1.0, 0.6, 1.0, mats.ink, -1.0, -0.1, 0.65, 0.4);
+          block(2.0, 0.6, 1.0, mats.white, -0.6, -0.8, 0.1, 0.04);
+          block(1.0, 0.6, 1.0, mats.black, 0.95, -0.8, -0.05, -0.06);
+          block(1.5, 0.6, 1.0, mats.cyan, 0.15, -0.2, 0.0, 0.16);
+          block(1.0, 0.6, 1.0, mats.white, 1.25, -0.2, 0.5, -0.28);
+          block(1.0, 1.2, 1.0, mats.black, -1.5, -0.5, -0.8, 0.1);
+          block(1.0, 0.6, 1.0, mats.white, -1.05, -0.2, 0.7, 0.38);
+          block(1.0, 0.6, 1.0, mats.white, -1.5, 0.4, -0.8, 0.1);
 
-          /* the sword */
+          /* low-poly sword */
           var sword = new THREE.Group();
-          var blade = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.07, 0.26), mats.steel);
+          var blade = piece(new THREE.BoxGeometry(2.4, 0.09, 0.3), mats.white, sword);
           blade.position.x = 0.6;
-          var tip = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.13, 0.3, 4, 1), mats.steel);
-          tip.rotation.z = -Math.PI / 2; tip.rotation.x = Math.PI / 4; tip.scale.set(1, 1, 0.38);
-          tip.position.x = 1.95;
-          var guard = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.16, 0.9), mats.ink);
-          guard.position.x = -0.66;
-          var handle = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.7, 12), mats.grip);
-          handle.rotation.z = Math.PI / 2; handle.position.x = -1.08;
-          var pommel = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.18, 0.18), mats.blue);
-          pommel.position.x = -1.5;
-          sword.add(blade, tip, guard, handle, pommel);
-          sword.position.set(0.05, 0.38, 0.15);
+          var tip = piece(new THREE.CylinderGeometry(0, 0.15, 0.36, 4, 1), mats.white, sword);
+          tip.rotation.z = -Math.PI / 2; tip.rotation.x = Math.PI / 4; tip.scale.set(1, 1, 0.42);
+          tip.position.x = 1.98;
+          var guard = piece(new THREE.BoxGeometry(0.18, 0.18, 1.0), mats.black, sword);
+          guard.position.x = -0.68;
+          var handle = piece(new THREE.BoxGeometry(0.7, 0.13, 0.13), mats.black, sword);
+          handle.position.x = -1.1;
+          var pommel = piece(new THREE.BoxGeometry(0.22, 0.22, 0.22), mats.black, sword);
+          pommel.position.x = -1.55;
+          sword.position.set(0.05, 0.34, 0.15);
           sword.rotation.set(0.0, 0.5, -0.06);
           group.add(sword);
 
-          /* soft contact shadow: a radial gradient on a plane */
+          /* light contact shadow */
           var c = document.createElement("canvas");
           c.width = c.height = 128;
           var g = c.getContext("2d");
           var grad = g.createRadialGradient(64, 64, 4, 64, 64, 64);
-          grad.addColorStop(0, "rgba(17,17,17,0.38)");
-          grad.addColorStop(0.55, "rgba(17,17,17,0.12)");
-          grad.addColorStop(1, "rgba(17,17,17,0)");
+          grad.addColorStop(0, "rgba(0,0,0,0.22)");
+          grad.addColorStop(0.6, "rgba(0,0,0,0.07)");
+          grad.addColorStop(1, "rgba(0,0,0,0)");
           g.fillStyle = grad; g.fillRect(0, 0, 128, 128);
           var shadow = new THREE.Mesh(
-            new THREE.PlaneGeometry(5.6, 3.6),
+            new THREE.PlaneGeometry(5.8, 3.6),
             new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false })
           );
           shadow.rotation.x = -Math.PI / 2;
-          shadow.position.y = -1.75;
+          shadow.position.y = -1.8;
           scene.add(shadow);
 
-          group.position.y = 0.1;
-          group.rotation.x = 0.08;
+          group.rotation.x = 0.06;
 
           function resize() {
             var w = stage.clientWidth, h = stage.clientHeight;
             if (!w || !h) return;
             renderer.setSize(w, h, false);
             camera.aspect = w / h;
-            camera.position.z = w / h < 0.95 ? 11 : 9.5;
+            camera.position.z = w / h < 0.95 ? 11.5 : 10;
             camera.updateProjectionMatrix();
             renderer.render(scene, camera);
           }
@@ -587,11 +430,11 @@
             if (!running) return;
             var dt = Math.min(0.05, (t - (last || t)) / 1000);
             last = t;
-            spin += dt * 0.22;
+            spin += dt * 0.2;
             px += (tx - px) * 0.05; py += (ty - py) * 0.05;
             group.rotation.y = spin + px * 0.35;
-            group.rotation.x = 0.08 + py * 0.12;
-            group.position.y = 0.1 + Math.sin(t / 1400) * 0.08;
+            group.rotation.x = 0.06 + py * 0.1;
+            group.position.y = Math.sin(t / 1400) * 0.07;
             shadow.scale.setScalar(1 - Math.sin(t / 1400) * 0.04);
             renderer.render(scene, camera);
             requestAnimationFrame(frame);
