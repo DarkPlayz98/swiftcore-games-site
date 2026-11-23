@@ -4,450 +4,775 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SwiftCore Games</title>
-    <meta name="description" content="We're SwiftCore Games, a small Roblox studio. We make Edge Of Honors and Speed Blocks." />
+    <meta name="description" content="SwiftCore Games is a small Roblox studio. We make Edge Of Honors and Speed Blocks." />
+    <script>document.documentElement.classList.add("js");</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600&display=swap"
     />
-    <link rel="stylesheet" href="hark.css" />
-    <link rel="stylesheet" href="hark-hero.css" />
     <style>
-      :root, :root[data-theme="dark"] {
-        color-scheme: light;
-        --x-ink: #000;
-        --x-grey: #555;
-        --x-cyan: #19C3FF;
-        --sans: "Archivo", system-ui, -apple-system, "Helvetica Neue", sans-serif;
-        --fill-primary-on: #fff;
-        --fill-primary: #000;
-        --text-primary: #000;
-        --text-secondary: #555;
-        --page-max: 1200px;
+      :root {
+        --bg: #e9efec;
+        --ink: #14211d;
+        --muted: #56645f;
+        --line: rgba(20, 33, 29, 0.1);
+        --mint: #bfe7d5;
+        --peach: #ffd9c7;
+        --lilac: #ddd4f6;
+        --sky: #cfe4f7;
+        --glass: rgba(255, 255, 255, 0.6);
+        --glass-b: rgba(255, 255, 255, 0.85);
+        --shadow: 0 1px 2px rgba(20, 33, 29, 0.04), 0 18px 48px -18px rgba(20, 33, 29, 0.18);
+        --serif: "Fraunces", Georgia, "Times New Roman", serif;
+        --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --inset: max(16px, 5vw);
+        --tap: 44px;
       }
-      body { background: #fff; color: var(--x-ink); font: 400 17px/1.55 var(--sans); }
-      .page { padding-block: 0; gap: 0; }
-      .main { gap: 0; }
-      :focus-visible { outline: 3px solid var(--x-cyan); outline-offset: 2px; border-radius: 0; }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+      body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; }
+      h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
+      ul, ol { list-style: none; }
+      :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 8px; }
+      .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+      em { font-style: italic; }
 
-      /* top bar */
-      .x-bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 8px; min-height: 60px;
-        margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); background: #fff; border-bottom: 2px solid var(--x-ink); }
-      .x-brand { display: flex; align-items: center; gap: 10px; min-height: var(--tap); text-decoration: none;
-        font-weight: 900; font-size: 18px; letter-spacing: -0.02em; }
-      .x-brand img { width: 28px; height: 28px; }
-      .x-bar nav { display: flex; margin-left: auto; }
-      .x-bar nav a { display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 10px; font-weight: 700; font-size: 15px; text-decoration: none; }
-      .x-bar nav a:hover { text-decoration: underline; text-decoration-color: var(--x-cyan); text-decoration-thickness: 3px; text-underline-offset: 6px; }
-
-      /* buttons and links */
-      .x-btns { display: flex; flex-wrap: wrap; gap: 10px; }
-      .x-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px;
-        border: 2px solid var(--x-ink); border-radius: 2px; background: #fff; color: var(--x-ink);
-        font: 800 16px/1 var(--sans); text-decoration: none; white-space: nowrap; transition: background-color 120ms, color 120ms; }
-      .x-btn:hover { background: var(--x-ink); color: #fff; }
-      .x-btn--solid { background: var(--x-ink); color: #fff; }
-      .x-btn--solid:hover { background: #fff; color: var(--x-ink); }
-      .x-btn--cyan { background: var(--x-cyan); border-color: var(--x-cyan); color: var(--x-ink); }
-      .x-btn--cyan:hover { background: #fff; border-color: #fff; color: var(--x-ink); }
-      .x-a { color: var(--x-ink); font-weight: 700; text-decoration: underline; text-decoration-color: var(--x-cyan);
-        text-decoration-thickness: 3px; text-underline-offset: 4px; }
-      .x-a:hover { background: var(--x-cyan); }
-      .x-links { display: flex; flex-wrap: wrap; gap: 0 24px; margin-top: 16px; }
-      .x-links a { display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap); min-width: var(--tap); }
-      .x-a--inline { display: inline-flex; align-items: center; min-height: var(--tap); vertical-align: middle; }
-
-      /* hero */
-      .x-hero { display: grid; gap: 8px; padding-block: 16px 56px; }
-      .x-stage { position: relative; order: -1; width: 100%; aspect-ratio: 1 / 0.85; }
-      .x-stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; touch-action: pan-y; }
-      .x-stage__fallback { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
-      .x-stage.is-fallback .x-stage__fallback { display: block; }
-      .x-word { margin: 0; font-weight: 900; font-size: clamp(72px, 22vw, 150px); line-height: 0.82; letter-spacing: -0.05em; }
-      .x-word span { display: block; }
-      .x-word small { display: block; margin-top: 16px; font-size: clamp(20px, 3vw, 26px); font-weight: 800; letter-spacing: 0.04em; line-height: 1; }
-      .x-hero__text { display: grid; gap: 24px; align-content: center; }
-      .x-hero__text p { font-size: 19px; max-width: 34ch; }
-      @media (min-width: 900px) {
-        .x-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 24px; padding-block: 40px 80px; align-items: center; }
-        .x-stage { order: 0; aspect-ratio: 1 / 1; }
-        .x-word { font-size: clamp(96px, 11vw, 150px); }
+      /* drifting pastel blobs */
+      .blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+      .blobs i { position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%; filter: blur(80px); opacity: 0.7; animation: drift 38s ease-in-out infinite alternate; }
+      .blobs i:nth-child(1) { background: var(--mint); top: -12vmax; left: -10vmax; }
+      .blobs i:nth-child(2) { background: var(--peach); top: 30vh; right: -16vmax; animation-duration: 46s; animation-delay: -12s; }
+      .blobs i:nth-child(3) { background: var(--lilac); bottom: -18vmax; left: 12vw; animation-duration: 52s; animation-delay: -20s; }
+      .blobs i:nth-child(4) { background: var(--sky); top: 60vh; left: -14vmax; width: 34vmax; height: 34vmax; animation-duration: 42s; animation-delay: -6s; }
+      @keyframes drift {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(8vw, -6vh) scale(1.12); }
+        100% { transform: translate(-6vw, 8vh) scale(0.94); }
       }
 
-      /* sections */
-      .x-sec { padding-block: 56px; border-top: 2px solid var(--x-ink); scroll-margin-top: 60px; }
-      .x-sec > h2, .x-band h2 { font-weight: 900; font-size: clamp(36px, 7vw, 64px); line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 24px; }
-      .x-plain { max-width: 60ch; }
-      .x-plain p + p { margin-top: 14px; }
-      .x-grey { color: var(--x-grey); }
+      /* cursor dot */
+      .cursor { position: fixed; left: 0; top: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--ink); pointer-events: none; z-index: 100; opacity: 0; mix-blend-mode: difference; background: #fff; transition: width 0.3s var(--ease), height 0.3s var(--ease), margin 0.3s var(--ease), opacity 0.3s; }
+      .cursor.on { opacity: 1; }
+      .cursor.big { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
 
-      /* Edge Of Honors */
-      .x-tilt { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 300ms var(--ease-out); will-change: transform; }
-      .x-tilt.is-tilting { transition: transform 80ms linear; }
-      .x-big { position: relative; margin: 0; border: 2px solid var(--x-ink); background: var(--x-ink); }
-      .x-big img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
-      .x-big h2 { position: absolute; left: 0; bottom: 0; margin: 0; padding: 10px 16px 12px; background: var(--x-ink); color: #fff;
-        font-weight: 900; font-size: clamp(26px, 6vw, 56px); line-height: 1; letter-spacing: -0.035em; }
-      .x-eoh { display: grid; gap: 32px; margin-top: 32px; }
-      .x-eoh h3 { font-weight: 900; font-size: 24px; letter-spacing: -0.02em; margin: 32px 0 8px; }
-      .x-shot { margin: 0; }
-      .x-shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border: 2px solid var(--x-ink); }
-      .x-shot figcaption { margin-top: 8px; font-size: 14px; color: var(--x-grey); }
-      @media (min-width: 720px) { .x-big img { aspect-ratio: 16 / 8; } }
-      @media (min-width: 900px) { .x-eoh { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 48px; } }
+      /* ---------- hero ---------- */
+      .hero { position: relative; margin: var(--inset) var(--inset) 0; border-radius: 20px; overflow: hidden; color: #fff; background: #1c2a26;
+        min-height: min(920px, calc(100svh - 2 * var(--inset))); display: grid; grid-template-rows: auto 1fr auto auto; isolation: isolate; --px: 0; --py: 0; }
+      .hero__media { position: absolute; inset: -24px; z-index: -2; transform: translate3d(calc(var(--px) * -14px), calc(var(--py) * -10px), 0); transition: transform 0.6s var(--ease); }
+      .hero__media img { width: 100%; height: 100%; object-fit: cover; animation: kenburns 20s ease-in-out infinite alternate; }
+      @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08); } }
+      .hero::before { content: ""; position: absolute; inset: 0; z-index: -1;
+        background: linear-gradient(90deg, rgba(8, 16, 14, 0.72) 0%, rgba(8, 16, 14, 0.38) 45%, rgba(8, 16, 14, 0) 75%),
+                    linear-gradient(0deg, rgba(8, 16, 14, 0.75) 0%, rgba(8, 16, 14, 0) 45%),
+                    linear-gradient(180deg, rgba(8, 16, 14, 0.4) 0%, rgba(8, 16, 14, 0) 22%); }
+      .hero__top { display: flex; align-items: center; justify-content: space-between; padding: 22px clamp(18px, 3vw, 36px); position: relative; z-index: 5; }
+      .brand { display: inline-flex; align-items: center; gap: 10px; min-height: var(--tap); text-decoration: none; font: 600 13px/1 var(--sans); letter-spacing: 0.16em; font-variant: small-caps; text-transform: uppercase; }
+      .brand img { width: 30px; height: 30px; border-radius: 8px; }
+      .menu-btn { width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.16); color: #fff;
+        backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); display: grid; place-items: center; cursor: pointer; transition: background 0.3s; }
+      .menu-btn:hover { background: rgba(255, 255, 255, 0.28); }
+      .menu-btn .bars span { display: block; width: 18px; height: 1.5px; background: currentColor; border-radius: 2px; transition: transform 0.35s var(--ease); }
+      .menu-btn .bars span + span { margin-top: 5px; }
+      .menu-btn .bars { display: grid; }
+      .menu-btn[aria-expanded="true"] .bars span:first-child { transform: translateY(3.25px) rotate(45deg); }
+      .menu-btn[aria-expanded="true"] .bars span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+      .menu { position: absolute; right: clamp(18px, 3vw, 36px); top: 78px; min-width: 210px; padding: 8px; border-radius: 18px; background: rgba(20, 30, 27, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.22); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+        opacity: 0; visibility: hidden; transform: translateY(-6px) scale(0.98); transform-origin: top right; transition: opacity 0.3s, transform 0.35s var(--ease), visibility 0.3s; }
+      .menu.open { opacity: 1; visibility: visible; transform: none; }
+      .menu a { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 0 14px; border-radius: 12px; text-decoration: none; font-size: 15px; }
+      .menu a:hover { background: rgba(255, 255, 255, 0.12); }
+      .menu a small { opacity: 0.6; font-size: 12px; }
 
-      /* Speed Blocks */
-      .x-row { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px 20px; margin-top: 56px; padding: 20px; border: 2px solid var(--x-ink); }
-      .x-row__icon { width: 64px; height: 64px; border: 2px solid var(--x-ink); }
-      .x-row h2 { font-weight: 900; font-size: 32px; line-height: 1; letter-spacing: -0.03em; margin-bottom: 10px; }
-      .x-row p + p { margin-top: 10px; }
-      .x-row__shot { grid-column: 1 / -1; }
-      .x-row__shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border: 2px solid var(--x-ink); }
-      .x-row .x-links { margin-top: 8px; }
-      @media (min-width: 900px) {
-        .x-row { grid-template-columns: 72px minmax(0, 1fr) 320px; padding: 24px; gap: 24px; }
-        .x-row__icon { width: 72px; height: 72px; }
-        .x-row__shot { grid-column: auto; }
-      }
+      .hero__copy { align-self: center; padding: 24px clamp(18px, 4vw, 56px); max-width: 980px; transform: translate3d(calc(var(--px) * 10px), calc(var(--py) * 6px), 0); transition: transform 0.6s var(--ease); }
+      .hero h1 { font: 350 clamp(44px, 8.4vw, 128px)/0.96 var(--serif); letter-spacing: -0.035em; font-variation-settings: "opsz" 144; }
+      .hero h1 .ln { display: block; }
+      .hero h1 em { font-weight: 300; }
+      .w { display: inline-block; }
+      .hero__sub { margin-top: 26px; max-width: 34ch; font-size: clamp(16px, 1.5vw, 19px); line-height: 1.5; color: rgba(255, 255, 255, 0.9); }
 
-      /* workshop */
-      .x-bench { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--x-ink); }
-      .x-bench li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 16px 0; border-bottom: 2px solid var(--x-ink);
-        font-weight: 800; font-size: clamp(20px, 3.4vw, 30px); line-height: 1.15; letter-spacing: -0.02em; }
-      .x-bench li span { font-weight: 400; }
-      .x-bench small { font: 400 15px/1.4 var(--sans); letter-spacing: 0; color: var(--x-grey); }
-      .x-bench + p { margin-top: 20px; }
+      .hero__low { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 0 clamp(18px, 3vw, 36px) 20px; }
+      .counts { width: 230px; font-size: 14px; }
+      .counts li { display: flex; justify-content: space-between; gap: 16px; padding: 7px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+      .counts li:last-child { border-bottom: 0; }
+      .counts span { color: rgba(255, 255, 255, 0.78); }
+      .counts b { font-weight: 500; font-variant-numeric: tabular-nums; }
+      .float { width: 240px; transform: translate3d(calc(var(--px) * 22px), calc(var(--py) * 16px), 0); transition: transform 0.6s var(--ease); }
+      .float__bar { display: flex; gap: 6px; margin-bottom: 10px; }
+      .float__bar span { flex: 1; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.3); overflow: hidden; }
+      .float__bar span::after { content: ""; display: block; height: 100%; width: 0; background: #fff; border-radius: 3px; }
+      .float__bar span.done::after { width: 100%; }
+      .float__bar span.run::after { animation: fill 4s linear forwards; }
+      @keyframes fill { to { width: 100%; } }
+      .float__frame { position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5); }
+      .float__frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.1s ease; }
+      .float__frame img.on { opacity: 1; }
+      .float__cap { margin-top: 8px; font-size: 12px; color: rgba(255, 255, 255, 0.8); }
+
+      .gbar { margin: 0 12px 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) auto; align-items: stretch; border-radius: 16px; overflow: hidden;
+        background: rgba(14, 22, 20, 0.42); border: 1px solid rgba(255, 255, 255, 0.18); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); }
+      .gbar__cell { display: flex; gap: 12px; align-items: center; padding: 16px 20px; border-right: 1px solid rgba(255, 255, 255, 0.14); min-width: 0; }
+      .gbar__cell svg { flex: none; width: 20px; height: 20px; opacity: 0.85; }
+      .gbar__cell small { display: block; font-size: 12px; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.72); }
+      .gbar__cell b { display: block; font-weight: 500; font-size: 15px; line-height: 1.3; }
+      .gbar__btn { display: flex; align-items: center; padding: 10px; }
+
+      /* buttons */
+      .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 0;
+        background: var(--ink); color: #fff; font: 500 15px/1 var(--sans); text-decoration: none; white-space: nowrap; cursor: pointer; transition: transform 0.35s var(--ease), background 0.3s, box-shadow 0.3s; will-change: transform; }
+      .btn--white { background: #fff; color: var(--ink); }
+      .btn--ghost { background: rgba(255, 255, 255, 0.55); color: var(--ink); border: 1px solid rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .btn:hover { box-shadow: 0 10px 24px -10px rgba(20, 33, 29, 0.45); }
+      .arr { position: relative; width: 16px; height: 16px; overflow: hidden; flex: none; }
+      .arr svg { position: absolute; inset: 0; width: 16px; height: 16px; transition: transform 0.45s var(--ease); }
+      .arr svg + svg { transform: translateX(-120%); }
+      .btn:hover .arr svg:first-child, .tlink:hover .arr svg:first-child { transform: translateX(120%); }
+      .btn:hover .arr svg + svg, .tlink:hover .arr svg + svg { transform: translateX(0); }
+      .tlink { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; min-width: 48px; font-weight: 500; font-size: 15px; text-decoration: none; border-bottom: 1px solid transparent; }
+      .tlink:hover { border-bottom-color: currentColor; }
+
+      /* ---------- sections ---------- */
+      .wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--inset); }
+      .sec { padding: clamp(72px, 11vw, 140px) 0 0; }
+      .eyebrow { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+      .h2 { font: 350 clamp(40px, 6.4vw, 84px)/1 var(--serif); letter-spacing: -0.03em; font-variation-settings: "opsz" 144; }
+      .h2 em { font-weight: 300; }
+      .lede { margin-top: 18px; max-width: 52ch; color: var(--muted); font-size: 18px; }
+      .head { margin-bottom: clamp(32px, 5vw, 56px); }
+
+      .glass { background: var(--glass); border: 1px solid var(--glass-b); border-radius: 24px; box-shadow: var(--shadow);
+        backdrop-filter: blur(22px) saturate(150%); -webkit-backdrop-filter: blur(22px) saturate(150%); }
+
+      /* games */
+      .games { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(16px, 2.4vw, 28px); align-items: start; perspective: 1400px; }
+      .game { position: relative; padding: 14px; overflow: hidden; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.6s var(--ease); --mx: 50%; --my: 0%; }
+      .game.tilting { transition: transform 0.12s linear; }
+      .game::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.4s;
+        background: radial-gradient(420px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%); mix-blend-mode: soft-light; }
+      .game.tilting::after { opacity: 1; }
+      .game__shot { border-radius: 14px; overflow: hidden; aspect-ratio: 16 / 10; background: var(--line); }
+      .game__shot img { width: 100%; height: 100%; object-fit: cover; }
+      .game__body { padding: 22px 12px 10px; }
+      .game__id { display: flex; align-items: center; gap: 14px; }
+      .game__id img { width: 56px; height: 56px; border-radius: 14px; box-shadow: 0 6px 16px -6px rgba(20, 33, 29, 0.35); }
+      .game__id h3 { font: 400 clamp(28px, 3vw, 38px)/1.05 var(--serif); letter-spacing: -0.02em; }
+      .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+      .tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; background: rgba(255, 255, 255, 0.75); border: 1px solid var(--line); }
+      .tag--peach { background: var(--peach); border-color: transparent; }
+      .tag--mint { background: var(--mint); border-color: transparent; }
+      .tag i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+      .game p { margin-top: 16px; color: #2b3934; }
+      .game p.small { font-size: 15px; color: var(--muted); }
+      .figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 20px; }
+      .figs div { padding: 12px; border-radius: 14px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.9); }
+      .figs dt { font-size: 12px; color: var(--muted); }
+      .figs dd { font: 400 22px/1.15 var(--serif); letter-spacing: -0.01em; margin-top: 2px; }
+      .note { margin-top: 18px; padding: 14px 16px; border-radius: 14px; background: rgba(255, 217, 199, 0.55); font-size: 15px; }
+      .note b { font-weight: 600; }
+      .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin-top: 22px; }
+      .acts .btn { margin-right: 4px; }
+
+      /* image wipe */
+      .js .wipe img { clip-path: inset(0 100% 0 0); transform: scale(1.06); transition: clip-path 1.2s var(--ease), transform 1.6s var(--ease); }
+      .js .wipe.in img { clip-path: inset(0 0 0 0); transform: none; }
+
+      /* reveal */
+      .js .rv { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); transition-delay: var(--d, 0s); }
+      .js .rv.in { opacity: 1; transform: none; }
+      .js .game.rv.in { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+      .js .game.rv.in.tilting { transition: transform 0.12s linear; transition-delay: 0s; }
+
+      /* marquee */
+      .marquee { margin-top: clamp(72px, 11vw, 140px); overflow: hidden; padding: 10px 0; border-block: 1px solid var(--line); }
+      .marquee__track { display: flex; width: max-content; animation: slide 48s linear infinite; }
+      .marquee span { flex: none; padding-right: 0.5em; font: italic 300 clamp(48px, 8vw, 112px)/1.1 var(--serif); white-space: nowrap; color: #66736e; }
+      @keyframes slide { to { transform: translateX(-50%); } }
+
+      /* bench */
+      .bench { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 22px); }
+      .bench li { padding: 26px 24px 22px; display: flex; flex-direction: column; gap: 10px; min-height: 250px; }
+      .bench .num { font: italic 300 15px/1 var(--serif); color: var(--muted); }
+      .bench h3 { font: 400 clamp(26px, 2.6vw, 32px)/1.1 var(--serif); letter-spacing: -0.02em; margin-top: auto; }
+      .bench p { color: var(--muted); font-size: 15px; }
+      .bench .tag { align-self: flex-start; }
+
+      /* pipeline */
+      .pipe { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+      .pipe__panel { position: sticky; top: 12vh; padding: 26px; z-index: 3; }
+      .pipe__live { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+      .pulse { width: 8px; height: 8px; border-radius: 50%; background: #2fa97a; box-shadow: 0 0 0 0 rgba(47, 169, 122, 0.5); animation: pulse 2s ease-out infinite; flex: none; }
+      @keyframes pulse { to { box-shadow: 0 0 0 10px rgba(47, 169, 122, 0); } }
+      .pipe__now { margin-top: 18px; font-size: 13px; color: var(--muted); }
+      .pipe__now b { display: block; margin-top: 2px; font: italic 400 24px/1.15 var(--serif); color: var(--ink); }
+      .pipe__nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 20px; }
+      .pipe__nums div { padding: 12px; border-radius: 14px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.9); }
+      .pipe__nums dt { font-size: 12px; color: var(--muted); }
+      .pipe__nums dd { font: 400 24px/1.15 var(--serif); font-variant-numeric: tabular-nums; }
+      .pipe__prog { display: flex; align-items: center; gap: 12px; margin-top: 20px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+      .pipe__prog span { flex: 1; height: 3px; border-radius: 3px; background: var(--line); overflow: hidden; }
+      .pipe__prog i { display: block; height: 100%; width: var(--p, 100%); background: var(--ink); border-radius: 3px; transition: width 0.6s var(--ease); }
+      .pipe__note { margin-top: 14px; font-size: 12px; color: var(--muted); }
+      .pipe__cards { display: grid; gap: 18px; padding-bottom: 8vh; }
+      .pcard { padding: 26px 26px 22px; display: grid; gap: 8px; transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), box-shadow 0.5s, background 0.5s; }
+      .js .pcard { opacity: 0.55; transform: scale(0.985); }
+      .js .pcard.active { opacity: 1; transform: none; background: rgba(255, 255, 255, 0.82); box-shadow: 0 0 0 1px #fff, 0 24px 60px -24px rgba(20, 33, 29, 0.3); }
+      .pcard__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .pcard__n { font: 300 15px/1 var(--serif); color: var(--muted); font-variant-numeric: tabular-nums; }
+      .st { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; font: italic 400 14px/1.3 var(--serif); background: rgba(255, 255, 255, 0.8); border: 1px solid var(--line); }
+      .st i { width: 6px; height: 6px; border-radius: 50%; background: #a3aca8; transition: background 0.4s; }
+      .st[data-tone="live"] i { background: #2fa97a; }
+      .st[data-tone="warm"] i { background: #e58a5c; }
+      .st[data-tone="lilac"] i { background: #8c78d6; }
+      .st.queued i { background: #c3cac7; }
+      .st.flip { animation: flip 0.6s var(--ease); }
+      @keyframes flip { from { opacity: 0; filter: blur(6px); transform: translateY(6px); } to { opacity: 1; filter: none; transform: none; } }
+      .pcard h3 { font: 400 clamp(26px, 2.8vw, 34px)/1.1 var(--serif); letter-spacing: -0.02em; margin-top: 6px; }
+      .pcard p { color: var(--muted); font-size: 15px; }
+      .pcard .tlink { justify-self: start; }
+
+      /* big stats */
+      .bigstats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+      .bigstats div { padding: 28px 24px 0 0; }
+      .bigstats div + div { padding-left: 24px; border-left: 1px solid var(--line); }
+      .bigstats b { display: block; font: 300 clamp(56px, 9vw, 132px)/1 var(--serif); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+      .bigstats span { display: block; margin-top: 10px; color: var(--muted); font-size: 15px; }
+
+      /* timeline */
+      .tl { border-top: 1px solid var(--line); }
+      .tl li { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 4px 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+      .tl time { font: italic 300 20px/1.3 var(--serif); color: var(--muted); }
+      .tl b { font-weight: 600; font-size: 18px; }
+      .tl p { grid-column: 2; color: var(--muted); font-size: 15px; }
 
       /* team */
-      .x-team { list-style: none; margin: 24px 0 0; padding: 0; max-width: 640px; }
-      .x-team li { padding: 10px 0; border-bottom: 1px solid var(--x-ink); font-size: 19px; }
-      .x-team b { font-weight: 800; }
-      .x-team .is-gone { color: var(--x-grey); }
+      .team { display: flex; flex-wrap: wrap; gap: 12px; }
+      .person { display: flex; align-items: center; gap: 12px; padding: 8px 22px 8px 8px; border-radius: 999px; }
+      .av { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font: italic 400 17px/1 var(--serif); flex: none; }
+      .person b { display: block; font-weight: 600; font-size: 16px; line-height: 1.2; }
+      .person small { display: block; font-size: 13px; color: var(--muted); }
+      .person.gone { opacity: 0.72; }
+      .team-links { display: flex; flex-wrap: wrap; gap: 4px 22px; margin-top: 22px; }
 
       /* community */
-      .x-band { margin-inline: calc(50% - 50vw); padding: 64px var(--gutter); background: var(--x-ink); color: #fff; scroll-margin-top: 60px; }
-      .x-band__in { max-width: calc(var(--page-max) - 2 * var(--gutter)); margin: 0 auto; display: grid; gap: 20px; justify-items: start; }
-      .x-band h2 { margin: 0; max-width: 15ch; font-size: clamp(38px, 7.5vw, 76px); }
-      .x-band p { color: #c8c8c8; max-width: 60ch; }
-      .x-band .x-btn { min-height: 56px; padding: 0 28px; font-size: 18px; }
+      .hang { position: relative; overflow: hidden; padding: clamp(36px, 7vw, 88px) clamp(22px, 6vw, 80px); text-align: left; }
+      .hang .h2 { font-size: clamp(44px, 8vw, 116px); max-width: 12ch; }
+      .hang p { margin-top: 20px; max-width: 52ch; color: #2b3934; font-size: 18px; }
+      .hang .acts { margin-top: 30px; }
+      .hang .rules { margin-top: 28px; font-size: 14px; color: var(--muted); }
 
-      /* footer */
-      .x-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; padding-block: 16px 24px; font-size: 13px; color: var(--x-grey); }
-      .x-foot a { display: inline-flex; align-items: center; min-height: var(--tap); color: var(--x-ink); }
-      .x-foot p { margin-right: auto; }
+      .foot { max-width: 1240px; margin: 0 auto; padding: 56px var(--inset) 40px; display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; font-size: 13px; color: var(--muted); }
+      .foot p { margin-right: auto; }
+      .foot a { display: inline-flex; align-items: center; min-height: var(--tap); text-decoration: none; }
+      .foot a:hover { color: var(--ink); }
 
-      @media (prefers-reduced-motion: reduce) { .x-tilt, .x-btn { transition: none; } }
+      /* load-in */
+      .js .hero h1 .w { opacity: 0; filter: blur(12px); transform: translateY(0.4em); animation: rise 1.2s var(--ease) forwards; animation-delay: calc(0.15s + var(--i) * 0.09s); }
+      .js .hero__sub, .js .hero__low { opacity: 0; animation: fadeup 1s var(--ease) 0.9s forwards; }
+      .js .gbar { transform: translateY(120%); opacity: 0; animation: barup 1.1s var(--ease) 1.1s forwards; }
+      @keyframes rise { to { opacity: 1; filter: blur(0); transform: none; } }
+      @keyframes fadeup { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      @keyframes barup { to { transform: none; opacity: 1; } }
+
+      @media (max-width: 1080px) {
+        .gbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .gbar__cell { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+        .gbar__cell:nth-child(2n) { border-right: 0; }
+        .gbar__btn { grid-column: 1 / -1; }
+        .gbar__btn .btn { width: 100%; }
+      }
+      @media (max-width: 900px) {
+        .games, .bench { grid-template-columns: minmax(0, 1fr); }
+        .pipe { grid-template-columns: minmax(0, 1fr); }
+        .pipe__panel { top: 8px; padding: 14px 16px; }
+        .pipe__now { margin-top: 10px; }
+        .pipe__now b { font-size: 19px; }
+        .pipe__nums { margin-top: 10px; }
+        .pipe__nums div { padding: 8px 10px; }
+        .pipe__nums dd { font-size: 19px; }
+        .pipe__prog { margin-top: 10px; }
+        .pipe__note { display: none; }
+      }
+      @media (max-width: 640px) {
+        .bigstats { grid-template-columns: minmax(0, 1fr); }
+        .bigstats div, .bigstats div + div { padding: 22px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+        .tl li { grid-template-columns: minmax(0, 1fr); }
+        .tl p { grid-column: 1; }
+        .pcard { padding: 20px 18px 16px; }
+      }
+      @media (max-width: 640px) {
+        body { font-size: 16px; }
+        .hero { min-height: 0; border-radius: 18px; }
+        .hero__top { padding: 14px 14px; }
+        .menu { right: 14px; top: 68px; }
+        .hero__copy { padding: 48px 18px 28px; }
+        .hero__sub { margin-top: 18px; }
+        .hero__low { flex-direction: column; align-items: stretch; padding: 0 18px 18px; }
+        .counts { width: 100%; }
+        .float { width: 100%; }
+        .float__frame { aspect-ratio: 16 / 9; }
+        .gbar { margin: 0 8px 8px; }
+        .gbar__cell { padding: 14px 14px; gap: 10px; }
+        .gbar__cell svg { display: none; }
+        .gbar__cell b { font-size: 14px; }
+        .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .game { padding: 10px; }
+        .game__body { padding: 18px 8px 6px; }
+        .person { width: 100%; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .js .hero h1 .w, .js .hero__sub, .js .hero__low, .js .gbar, .js .rv { opacity: 1; filter: none; transform: none; }
+        .js .wipe img { clip-path: none; transform: none; }
+        .hero__media, .hero__copy, .float { transform: none; }
+        .cursor { display: none; }
+      }
     </style>
   </head>
   <body>
-    <div class="page" id="top">
-      <header class="x-bar">
-        <a class="x-brand" href="#top"><img src="swiftcore-logo.png" alt="" width="28" height="28" />SwiftCore</a>
-        <nav aria-label="Main">
-          <a href="#games">Games</a>
-          <a href="#team">Team</a>
-          <a href="#community">Discord</a>
+    <div class="blobs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <header class="hero" id="top">
+      <div class="hero__media" aria-hidden="true">
+        <img src="eoh-shot1.png" alt="" />
+      </div>
+      <div class="hero__top">
+        <a class="brand" href="#top"><img src="swiftcore-logo.png" alt="" width="30" height="30" />SwiftCore Games</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span class="bars"><span></span><span></span></span></button>
+        <nav class="menu" id="menu" aria-label="Main">
+          <a href="#games">Games <small>01</small></a>
+          <a href="#bench">Building <small>02</small></a>
+          <a href="#year">2026 <small>03</small></a>
+          <a href="#team">Team <small>04</small></a>
+          <a href="#hang">Discord <small>134</small></a>
         </nav>
-      </header>
+      </div>
 
-      <main class="main">
-        <section class="x-hero" aria-labelledby="hero-title">
-          <div class="x-hero__text">
-            <h1 class="x-word" id="hero-title"><span>SWIFT</span><span>CORE</span><small>GAMES</small></h1>
-            <p>We make Roblox games. Right now that's mostly Edge Of Honors. Small team, run by Ahnaf4545, going since June 2025.</p>
-            <div class="x-btns">
-              <a class="x-btn x-btn--solid" href="https://www.roblox.com/games/103283901827758/Edge-Of-Honors" target="_blank" rel="noopener">Play Edge Of Honors</a>
-              <a class="x-btn" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Discord</a>
-            </div>
+      <div class="hero__copy">
+        <h1 aria-label="Small studio, big worlds">
+          <span class="ln" aria-hidden="true"><span class="w" style="--i:0">Small</span> <span class="w" style="--i:1">studio,</span></span>
+          <span class="ln" aria-hidden="true"><span class="w" style="--i:2"><em>big</em></span> <span class="w" style="--i:3">worlds</span></span>
+        </h1>
+        <p class="hero__sub">SwiftCore Games makes Roblox games. Edge Of Honors is our sword-fighting one, Speed Blocks is the fast one. Small team, run by Ahnaf4545, going since June 2025.</p>
+      </div>
+
+      <div class="hero__low">
+        <ul class="counts" aria-label="Edge Of Honors and group numbers">
+          <li><span>Visits</span><b data-count="2040">2,040</b></li>
+          <li><span>Favourites</span><b data-count="127">127</b></li>
+          <li><span>Likes</span><b data-count="37">37</b></li>
+          <li><span>Max players</span><b data-count="20">20</b></li>
+          <li><span>Members</span><b data-count="34">34</b></li>
+        </ul>
+        <figure class="float" aria-label="Screenshots from our games">
+          <div class="float__bar" aria-hidden="true"><span></span><span></span></div>
+          <div class="float__frame">
+            <img class="on" src="eoh-shot2.png" alt="An Edge Of Honors map seen from above" />
+            <img src="speedblocks-shot.png" alt="Players racing across speed pads in Speed Blocks" />
           </div>
-          <div class="x-stage" id="stage">
-            <svg class="x-stage__fallback" viewBox="0 0 400 340" role="img" aria-label="Three toy blocks stacked, one of them cyan">
-              <g stroke="#000" stroke-width="3" stroke-linejoin="round">
-                <rect x="70" y="200" width="160" height="60" fill="#fff" />
-                <rect x="230" y="200" width="90" height="60" fill="#111" />
-                <rect x="140" y="140" width="120" height="60" fill="#19C3FF" />
-                <rect x="160" y="128" width="26" height="12" fill="#19C3FF" />
-                <rect x="214" y="128" width="26" height="12" fill="#19C3FF" />
-                <rect x="90" y="188" width="26" height="12" fill="#fff" />
-                <rect x="260" y="188" width="26" height="12" fill="#111" />
-              </g>
-            </svg>
+          <figcaption class="float__cap">Edge Of Honors · Speed Blocks</figcaption>
+        </figure>
+      </div>
+
+      <div class="gbar">
+        <div class="gbar__cell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="19" height="11" rx="4"/><path d="M7 11v3M5.5 12.5h3M15.5 12h.01M18 13.5h.01"/></svg>
+          <div><small>Game</small><b>Edge Of Honors</b></div>
+        </div>
+        <div class="gbar__cell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3.5 17.5v3h3l5.8-5.8a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/></svg>
+          <div><small>Status</small><b>Private, being reworked</b></div>
+        </div>
+        <div class="gbar__cell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 17.5 3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/></svg>
+          <div><small>Mode</small><b>Sword PvP · R6</b></div>
+        </div>
+        <div class="gbar__cell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="11" cy="8" r="3.5"/><path d="M21 20v-1.5a3.5 3.5 0 0 0-2.5-3.35M16 4.6a3.5 3.5 0 0 1 0 6.8"/></svg>
+          <div><small>Server</small><b>134 on Discord</b></div>
+        </div>
+        <div class="gbar__btn">
+          <a class="btn btn--white mag" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Join the Discord <span class="arr" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="sec" id="games">
+        <div class="wrap">
+          <div class="head rv">
+            <p class="eyebrow">01 — What we've made</p>
+            <h2 class="h2">Two games, one <em>small</em> team.</h2>
+            <p class="lede">Two games out on Roblox. One for fighting your friends, one for outrunning them.</p>
           </div>
-        </section>
-
-        <section class="x-sec" id="games" style="border-top:0;padding-top:0">
-          <figure class="x-big x-tilt" data-tilt>
-            <img src="eoh-shot1.png" alt="Two players with swords in Edge Of Honors, with the text 'Play with a friend!'" />
-            <h2>Edge Of Honors</h2>
-          </figure>
-
-          <div class="x-eoh">
-            <div class="x-plain">
-              <p>Sword fighting with your friends. You hit people, get money, buy better swords. Whatever sword you've got equipped follows you into every server. It's still in beta.</p>
-              <p>Swords right now: Basic Sword, Fire Sword, StormCutter Sword, Golden Sword, Sand Sword, Bone Sword and Block Sword.</p>
-              <p>As of 22 Nov 2026 it's had 2,040 visits, 37 likes (and 1 dislike) and 127 favourites. Servers hold 20 players, avatars are R6. First published 17 Feb 2025, last updated 21 Nov 2026.</p>
-
-              <h3>What's happening</h3>
-              <p>Since May 2026 we've been rebuilding every system to Roblox's newer standards. New maps stay, older maps get reworked, swords are getting remodelled, and a server-side sword system is on the way. The Golden Arena is one of the maps.</p>
-
-              <div class="x-links">
-                <a class="x-a" href="https://www.roblox.com/games/103283901827758/Edge-Of-Honors" target="_blank" rel="noopener">Play on Roblox</a>
-                <a class="x-a" href="https://youtu.be/yWn4dREqG4k" target="_blank" rel="noopener">Update 8 trailer</a>
-                <a class="x-a" href="https://edgeofhonors.netlify.app/" target="_blank" rel="noopener">Game site</a>
+          <div class="games">
+            <article class="game glass rv" data-tilt>
+              <div class="game__shot wipe"><img src="eoh-shot2.png" alt="One of the Edge Of Honors maps, seen from above" loading="lazy" /></div>
+              <div class="game__body">
+                <div class="game__id">
+                  <img src="eoh-icon.png" alt="Edge Of Honors icon" width="56" height="56" loading="lazy" />
+                  <div>
+                    <h3>Edge Of Honors</h3>
+                    <div class="tags"><span class="tag">Beta</span><span class="tag tag--peach"><i></i>Private, being reworked</span></div>
+                  </div>
+                </div>
+                <p>Sword fighting with your friends. You hit people, get money, buy better swords. Whatever sword you've got equipped follows you into every server.</p>
+                <p class="small">Swords right now: Basic, Fire, StormCutter, Golden, Sand, Bone and Block. The Golden Arena is one of the maps.</p>
+                <dl class="figs">
+                  <div><dt>Visits</dt><dd>2,040</dd></div>
+                  <div><dt>Favourites</dt><dd>127</dd></div>
+                  <div><dt>Votes</dt><dd>37↑ 1↓</dd></div>
+                  <div><dt>Server</dt><dd>20 · R6</dd></div>
+                </dl>
+                <p class="note"><b>Private since 25 May 2026.</b> We're rebuilding every system to Roblox's newer standards. New maps stay, older maps get reworked, swords are getting remodelled, and a server-side sword system is on the way.</p>
+                <p class="small">First published 17 Feb 2025, last updated 21 Nov 2026. Numbers as of 22 Nov 2026.</p>
+                <div class="acts">
+                  <a class="btn mag" href="https://www.roblox.com/games/103283901827758/Edge-Of-Honors" target="_blank" rel="noopener">Roblox page <span class="arr" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+                  <a class="tlink" href="https://youtu.be/yWn4dREqG4k" target="_blank" rel="noopener">Update 8 trailer</a>
+                  <a class="tlink" href="https://edgeofhonors.netlify.app/" target="_blank" rel="noopener">Game site</a>
+                </div>
               </div>
-            </div>
-            <figure class="x-shot x-tilt" data-tilt>
-              <img src="eoh-shot2.png" alt="Overview of an Edge Of Honors map" loading="lazy" />
-              <figcaption>One of the maps, from above.</figcaption>
-            </figure>
-          </div>
+            </article>
 
-          <article class="x-row" id="speed-blocks" aria-labelledby="sb-title">
-            <img class="x-row__icon" src="speedblocks-icon.png" alt="Speed Blocks icon" width="72" height="72" loading="lazy" />
-            <div>
-              <h2 id="sb-title">Speed Blocks</h2>
-              <p>Step on pads and go stupid fast. Dash, jump and race your friends across the map, and try not to fall off.</p>
-              <p class="x-grey">Out since 30 Mar 2026, and yes, we built it on mobile. 195 visits, 12-player servers, R15.</p>
-              <p><b>Update 1.1.4</b> (6 Oct 2026): the map's optimised so it runs better, plus bug fixes for smoother, fairer runs.</p>
-              <div class="x-links">
-                <a class="x-a" href="https://www.roblox.com/games/73601802773051/Speed-Blocks" target="_blank" rel="noopener">Play</a>
-                <a class="x-a" href="https://youtu.be/Tf8yXrwepII" target="_blank" rel="noopener">Showcase video</a>
+            <article class="game glass rv" data-tilt style="--d:0.12s">
+              <div class="game__shot wipe"><img src="speedblocks-shot.png" alt="Players racing across speed pads in Speed Blocks" loading="lazy" /></div>
+              <div class="game__body">
+                <div class="game__id">
+                  <img src="speedblocks-icon.png" alt="Speed Blocks icon" width="56" height="56" loading="lazy" />
+                  <div>
+                    <h3>Speed Blocks</h3>
+                    <div class="tags"><span class="tag tag--mint"><i></i>Live</span><span class="tag">Built on mobile</span></div>
+                  </div>
+                </div>
+                <p>Step on pads and go stupid fast. Dash, jump and race your friends across the map, and try not to fall off.</p>
+                <dl class="figs">
+                  <div><dt>Visits</dt><dd>195</dd></div>
+                  <div><dt>Votes</dt><dd>3↑ 0↓</dd></div>
+                  <div><dt>Server</dt><dd>12 · R15</dd></div>
+                  <div><dt>Out since</dt><dd>30 Mar ’26</dd></div>
+                </dl>
+                <p class="note" style="background:rgba(191,231,213,.6)"><b>Update 1.1.4, 6 Oct 2026.</b> The map's optimised so it runs better, plus bug fixes for smoother, fairer runs.</p>
+                <div class="acts">
+                  <a class="btn mag" href="https://www.roblox.com/games/73601802773051/Speed-Blocks" target="_blank" rel="noopener">Play <span class="arr" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+                  <a class="tlink" href="https://youtu.be/Tf8yXrwepII" target="_blank" rel="noopener">Trailer</a>
+                </div>
               </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>Edge Of Honors · Speed Blocks · Terminal Build · Eclipse Animator · </span>
+          <span>Edge Of Honors · Speed Blocks · Terminal Build · Eclipse Animator · </span>
+        </div>
+      </div>
+
+      <section class="sec" id="bench">
+        <div class="wrap">
+          <div class="head rv">
+            <p class="eyebrow">02 — The studio, live</p>
+            <h2 class="h2">Everything we're <em>building</em>, in order.</h2>
+            <p class="lede">Two games, one trailer, one plugin and two things on the way.</p>
+          </div>
+          <div class="pipe">
+            <aside class="pipe__panel glass" aria-label="Studio counters">
+              <p class="pipe__live"><span class="pulse" aria-hidden="true"></span>SwiftCore Studio · Building</p>
+              <p class="pipe__now">Now on<b id="pipe-now">Edge Of Honors</b></p>
+              <dl class="pipe__nums">
+                <div><dt>Visits</dt><dd id="pc-visits">2,235</dd></div>
+                <div><dt>Likes</dt><dd id="pc-likes">40</dd></div>
+                <div><dt>Members</dt><dd id="pc-members">34</dd></div>
+              </dl>
+              <p class="pipe__prog"><span><i id="pipe-bar"></i></span><b id="pipe-step">06 / 06</b></p>
+              <p class="pipe__note">Both games' visits and likes, plus Roblox group members.</p>
+            </aside>
+            <ol class="pipe__cards">
+              <li class="pcard glass" data-title="Edge Of Honors" data-visits="2040" data-likes="37" data-members="34">
+                <div class="pcard__top"><span class="pcard__n">01</span><span class="st" data-tone="warm"><i></i><span>Private · reworking</span></span></div>
+                <h3>Edge Of Honors</h3>
+                <p>Our sword PvP game, still in beta. 2,040 visits so far. Private since 25 May 2026 while we rework every system.</p>
+              </li>
+              <li class="pcard glass" data-title="Update 8 trailer">
+                <div class="pcard__top"><span class="pcard__n">02</span><span class="st" data-tone="live"><i></i><span>Live</span></span></div>
+                <h3>Update 8 trailer</h3>
+                <p>Edge Of Honors' Update 8, on video.</p>
+                <a class="tlink" href="https://youtu.be/yWn4dREqG4k" target="_blank" rel="noopener">Watch on YouTube</a>
+              </li>
+              <li class="pcard glass" data-title="Speed Blocks" data-visits="2235" data-likes="40">
+                <div class="pcard__top"><span class="pcard__n">03</span><span class="st" data-tone="live"><i></i><span>Live</span></span></div>
+                <h3>Speed Blocks</h3>
+                <p>Launched 30 Mar 2026, 195 visits. Update 1.1.4 landed 6 Oct 2026.</p>
+              </li>
+              <li class="pcard glass" data-title="Eclipse Animator">
+                <div class="pcard__top"><span class="pcard__n">04</span><span class="st" data-tone="live"><i></i><span>Shipped</span></span></div>
+                <h3>Eclipse Animator</h3>
+                <p>A free animation plugin for Roblox Studio. Out 15 Oct 2026.</p>
+                <a class="tlink" href="https://create.roblox.com/store/asset/86116556258301/Eclipse-Animator" target="_blank" rel="noopener">Get the plugin <span class="arr" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+              </li>
+              <li class="pcard glass" data-title="Brookhaven-style game">
+                <div class="pcard__top"><span class="pcard__n">05</span><span class="st" data-tone="lilac"><i></i><span>Teased</span></span></div>
+                <h3>A Brookhaven-style RP game</h3>
+                <p>Teased Aug 2026. Still early.</p>
+              </li>
+              <li class="pcard glass" data-title="Terminal Build">
+                <div class="pcard__top"><span class="pcard__n">06</span><span class="st" data-tone="lilac"><i></i><span>Teased</span></span></div>
+                <h3>Terminal Build</h3>
+                <p>Teased 31 Oct 2026. Almost done.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="numbers" aria-label="Studio numbers">
+        <div class="wrap">
+          <div class="bigstats rv">
+            <div><b data-count2="2040">2,040</b><span>Edge Of Honors visits</span></div>
+            <div><b data-count2="134">134</b><span>People on our Discord</span></div>
+            <div><b data-count2="34">34</b><span>Roblox group members</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="year">
+        <div class="wrap">
+          <div class="head rv">
+            <p class="eyebrow">03 — Logbook</p>
+            <h2 class="h2">Our <em>2026</em>, so far.</h2>
+          </div>
+          <ol class="tl">
+            <li class="rv"><time>30 Mar</time><b>Speed Blocks launched</b><p>Our second game goes out, built on mobile.</p></li>
+            <li class="rv"><time>25 May</time><b>Edge Of Honors went private</b><p>Taken offline for a full rework.</p></li>
+            <li class="rv"><time>Aug</time><b>Brookhaven-style game teased</b><p>A first look at an RP game.</p></li>
+            <li class="rv"><time>6 Oct</time><b>Speed Blocks 1.1.4</b><p>Map optimised, plus bug fixes.</p></li>
+            <li class="rv"><time>15 Oct</time><b>Eclipse Animator</b><p>Our free animation plugin for Roblox Studio.</p></li>
+            <li class="rv"><time>31 Oct</time><b>Terminal Build teased</b><p>Next up, and almost done.</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="sec" id="team">
+        <div class="wrap">
+          <div class="head rv">
+            <p class="eyebrow">04 — The people</p>
+            <h2 class="h2">The people <em>behind</em> it.</h2>
+            <p class="lede">A Roblox group with 34 members, started June 2025. We try to keep our games simple and fun to actually play.</p>
+          </div>
+          <ul class="team">
+            <li class="person glass rv"><span class="av" style="background:var(--mint)">Ah</span><span><b>Ahnaf4545</b><small>Owner, lead dev</small></span></li>
+            <li class="person glass rv" style="--d:0.08s"><span class="av" style="background:var(--lilac)">Zå</span><span><b>Zåkµrµ <span style="font-weight:400;color:var(--muted)">(zanund)</span></b><small>Phantom Authority, scripting</small></span></li>
+            <li class="person glass rv" style="--d:0.16s"><span class="av" style="background:var(--peach)">DL</span><span><b>DarkLord_ALT</b><small>Senior Mod</small></span></li>
+            <li class="person glass rv gone" style="--d:0.24s"><span class="av" style="background:var(--sky)">rk</span><span><b>red_king</b><small>Retired dev, left Sep 2026 for university</small></span></li>
+          </ul>
+          <div class="team-links rv">
+            <a class="tlink" href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
+            <a class="tlink" href="https://www.youtube.com/channel/UChJkJqyFkQld5ALfobTehIA" target="_blank" rel="noopener">YouTube (Ahnaf4545)</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="hang">
+        <div class="wrap">
+          <div class="hang glass rv">
+            <p class="eyebrow">05 — Come hang out</p>
+            <h2 class="h2">Come play <em>today.</em></h2>
+            <p>134 people already hang out on our Discord. It's where everything happens first: announcements, sneak peeks of what we're building, polls, giveaways, videos and self-roles.</p>
+            <div class="acts">
+              <a class="btn mag" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Join the Discord <span class="arr" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+              <a class="btn btn--ghost mag" href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
             </div>
-            <figure class="x-row__shot" style="margin:0">
-              <img src="speedblocks-shot.png" alt="Players racing across speed pads in Speed Blocks" loading="lazy" />
-            </figure>
-          </article>
-        </section>
-
-        <section class="x-sec" id="workshop">
-          <h2>On the bench</h2>
-          <ul class="x-bench">
-            <li>Terminal Build <span>— almost done</span> <small>teased 31 Oct 2026</small></li>
-            <li>A Brookhaven-style RP game <span>— early</span> <small>teased Aug 2026</small></li>
-          </ul>
-          <p>We also put out <a class="x-a x-a--inline" href="https://create.roblox.com/store/asset/86116556258301/Eclipse-Animator" target="_blank" rel="noopener">Eclipse Animator</a>, a free animation plugin for Roblox Studio.</p>
-        </section>
-
-        <section class="x-sec" id="team">
-          <h2>Who's here</h2>
-          <p class="x-plain">SwiftCore Games is a Roblox group with 34 members, started June 2025. We try to keep our games simple and fun to actually play.</p>
-          <ul class="x-team">
-            <li><b>Ahnaf4545</b> — owner, lead dev</li>
-            <li><b>Zåkµrµ</b> (zanund) — scripting, Phantom Authority</li>
-            <li><b>DarkLord_ALT</b> — senior moderator</li>
-            <li class="is-gone"><b>red_king</b> — retired developer, left Sep 2026 for university</li>
-          </ul>
-          <div class="x-links">
-            <a class="x-a" href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
-            <a class="x-a" href="https://www.youtube.com/channel/UChJkJqyFkQld5ALfobTehIA" target="_blank" rel="noopener">YouTube (Ahnaf4545)</a>
+            <p class="rules">House rules: be respectful, no spam, no NSFW, no ads without the owner's ok, and follow Discord's guidelines.</p>
           </div>
-        </section>
+        </div>
+      </section>
+    </main>
 
-        <section class="x-band" id="community" aria-labelledby="discord-title">
-          <div class="x-band__in">
-            <h2 id="discord-title">Come hang out on Discord. 134 people already do.</h2>
-            <p>Announcements, sneak peeks of what we're building, polls, giveaways, videos and self-roles.</p>
-            <a class="x-btn x-btn--cyan" href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Join the Discord</a>
-            <p>Rules: be respectful, no spam, no NSFW, no ads without the owner's ok, follow Discord's guidelines.</p>
-          </div>
-        </section>
-      </main>
-
-      <footer class="x-foot">
-        <p>© 2026 SwiftCore Games. Not affiliated with Roblox Corporation.</p>
-        <a href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Discord</a>
-        <a href="https://www.youtube.com/channel/UChJkJqyFkQld5ALfobTehIA" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
-      </footer>
-    </div>
-    <script src="hark.js"></script>
+    <footer class="foot">
+      <p>© 2026 SwiftCore Games. Not affiliated with Roblox Corporation.</p>
+      <a href="https://discord.gg/GnBXJ5mmj3" target="_blank" rel="noopener">Discord</a>
+      <a href="https://www.youtube.com/channel/UChJkJqyFkQld5ALfobTehIA" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.roblox.com/communities/937691857/SwiftCore-Games" target="_blank" rel="noopener">Roblox group</a>
+    </footer>
     <script>
-      /* subtle tilt on the two Edge Of Honors screenshots */
       (function () {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        document.querySelectorAll("[data-tilt]").forEach(function (el) {
-          function move(e) {
-            var r = el.getBoundingClientRect();
-            var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-            el.style.setProperty("--ry", (x * 4).toFixed(2) + "deg");
-            el.style.setProperty("--rx", (-y * 4).toFixed(2) + "deg");
-            el.classList.add("is-tilting");
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        var hero = document.querySelector(".hero");
+
+        /* menu */
+        var mbtn = document.querySelector(".menu-btn"), menu = document.getElementById("menu");
+        function setMenu(open) { mbtn.setAttribute("aria-expanded", open); menu.classList.toggle("open", open); }
+        mbtn.addEventListener("click", function () { setMenu(mbtn.getAttribute("aria-expanded") !== "true"); });
+        menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
+        document.addEventListener("click", function (e) { if (!e.target.closest(".menu, .menu-btn")) setMenu(false); });
+
+        /* counters */
+        if (!reduce) {
+          var nums = document.querySelectorAll("[data-count]");
+          nums.forEach(function (n) { n.textContent = "0"; });
+          setTimeout(function () {
+            var t0 = performance.now(), dur = 1800;
+            (function tick(t) {
+              var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+              nums.forEach(function (n) { n.textContent = Math.round(+n.dataset.count * e).toLocaleString("en-US"); });
+              if (p < 1) requestAnimationFrame(tick);
+            })(t0);
+          }, 1000);
+        }
+
+        /* floating card: crossfade every 4s */
+        var imgs = document.querySelectorAll(".float__frame img"), bars = document.querySelectorAll(".float__bar span"), cur = 0;
+        function show(i) {
+          imgs.forEach(function (im, k) { im.classList.toggle("on", k === i); });
+          bars.forEach(function (b, k) { b.classList.remove("run", "done"); if (k < i) b.classList.add("done"); });
+          void bars[i].offsetWidth; bars[i].classList.add("run");
+        }
+        if (!reduce) { show(0); setInterval(function () { cur = (cur + 1) % imgs.length; show(cur); }, 4000); }
+        else bars[0].classList.add("done");
+
+        /* hero parallax */
+        if (!reduce) {
+          var raf = 0;
+          function par(x, y) {
+            var r = hero.getBoundingClientRect();
+            var px = ((x - r.left) / r.width - 0.5) * 2, py = ((y - r.top) / r.height - 0.5) * 2;
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(function () { hero.style.setProperty("--px", px.toFixed(3)); hero.style.setProperty("--py", py.toFixed(3)); });
           }
-          function reset() { el.style.setProperty("--rx", "0deg"); el.style.setProperty("--ry", "0deg"); el.classList.remove("is-tilting"); }
-          el.addEventListener("pointermove", move);
-          el.addEventListener("pointerdown", move);
-          el.addEventListener("pointerleave", reset);
-          el.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") reset(); });
-          el.addEventListener("pointercancel", reset);
+          hero.addEventListener("pointermove", function (e) { par(e.clientX, e.clientY); });
+          hero.addEventListener("pointerleave", function () { hero.style.setProperty("--px", 0); hero.style.setProperty("--py", 0); });
+          hero.addEventListener("touchmove", function (e) { var t = e.touches[0]; if (t) par(t.clientX, t.clientY); }, { passive: true });
+        }
+
+        /* reveal on scroll */
+        var items = document.querySelectorAll(".rv, .wipe");
+        if (reduce || !("IntersectionObserver" in window)) items.forEach(function (el) { el.classList.add("in"); });
+        else {
+          var io = new IntersectionObserver(function (es) {
+            es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+          }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+          items.forEach(function (el) { io.observe(el); });
+        }
+
+        /* pipeline: sticky panel follows the card in the middle of the screen */
+        var cards = [].slice.call(document.querySelectorAll(".pcard"));
+        var pNow = document.getElementById("pipe-now"), pStep = document.getElementById("pipe-step"), pBar = document.getElementById("pipe-bar");
+        var pc = { visits: document.getElementById("pc-visits"), likes: document.getElementById("pc-likes"), members: document.getElementById("pc-members") };
+        var val = { visits: 0, likes: 0, members: 0 }, tweens = {};
+        function fmt(n) { return Math.round(n).toLocaleString("en-US"); }
+        function tween(key, to) {
+          if (val[key] === to) return;
+          var from = val[key], t0 = performance.now(), dur = 1200;
+          cancelAnimationFrame(tweens[key]);
+          (function tick(t) {
+            var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+            val[key] = from + (to - from) * e; pc[key].textContent = fmt(val[key]);
+            if (p < 1) tweens[key] = requestAnimationFrame(tick); else val[key] = to;
+          })(t0);
+        }
+        cards.forEach(function (c) {
+          var st = c.querySelector(".st"), lab = st.querySelector("span");
+          c._real = lab.textContent; c._lab = lab; c._st = st;
+          if (!reduce) { lab.textContent = "Queued"; st.classList.add("queued"); }
         });
-      })();
-    </script>
-    <script src="https://unpkg.com/three@0.149.0/build/three.min.js"></script>
-    <script>
-      /* hero: chunky studded blocks and a low-poly sword with black outlines. Three.js r149, global THREE */
-      (function () {
-        var stage = document.getElementById("stage");
-        function fallback() { stage.classList.add("is-fallback"); }
-        try {
-          var test = document.createElement("canvas");
-          if (!(test.getContext("webgl2") || test.getContext("webgl"))) return fallback();
-        } catch (e) { return fallback(); }
-        if (typeof window.THREE === "undefined") return fallback();
-
-        try { (function (THREE) {
-          var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-          if (THREE.ColorManagement) {
-            if ("legacyMode" in THREE.ColorManagement) THREE.ColorManagement.legacyMode = false;
-            if ("enabled" in THREE.ColorManagement) THREE.ColorManagement.enabled = true;
+        if (!reduce) {
+          pNow.textContent = "Warming up"; pStep.textContent = "00 / 06"; pBar.style.setProperty("--p", "0%");
+          for (var k in pc) pc[k].textContent = "0";
+        }
+        var reached = -1;
+        function setActive(i) {
+          cards.forEach(function (c, k) { c.classList.toggle("active", k === i); });
+          pNow.textContent = cards[i].dataset.title;
+          pStep.textContent = "0" + (i + 1) + " / 06";
+          pBar.style.setProperty("--p", ((i + 1) / cards.length * 100).toFixed(1) + "%");
+          if (reduce || i <= reached) return;
+          for (var k2 = reached + 1; k2 <= i; k2++) {
+            var c = cards[k2];
+            c._lab.textContent = c._real; c._st.classList.remove("queued");
+            c._st.classList.remove("flip"); void c._st.offsetWidth; c._st.classList.add("flip");
+            ["visits", "likes", "members"].forEach(function (key) { if (c.dataset[key]) tween(key, +c.dataset[key]); });
           }
-          var renderer;
-          try {
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
-          } catch (e) { return fallback(); }
-          var small = Math.min(window.innerWidth, window.innerHeight) < 700;
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-          renderer.outputEncoding = THREE.sRGBEncoding;
-          renderer.setClearColor(0xffffff, 0);
-          renderer.domElement.setAttribute("role", "img");
-          renderer.domElement.setAttribute("aria-label", "Toy-like studded blocks in white, black and one cyan, with a low-poly sword lying across them");
-          stage.prepend(renderer.domElement);
+          reached = i;
+        }
+        if ("IntersectionObserver" in window) {
+          var pio = new IntersectionObserver(function (es) {
+            es.forEach(function (en) { if (en.isIntersecting) setActive(cards.indexOf(en.target)); });
+          }, { rootMargin: "-45% 0px -45% 0px" });
+          cards.forEach(function (c) { pio.observe(c); });
+        } else cards.forEach(function (c) { c.classList.add("active"); });
 
-          var scene = new THREE.Scene();
-          var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-          camera.position.set(0, 2.8, 10);
-          camera.lookAt(0, 0, 0);
+        /* big stat row count-up */
+        var big = document.querySelector(".bigstats");
+        if (!reduce && "IntersectionObserver" in window) {
+          var bn = big.querySelectorAll("[data-count2]");
+          bn.forEach(function (n) { n.textContent = "0"; });
+          var bio = new IntersectionObserver(function (es) {
+            if (!es[0].isIntersecting) return;
+            bio.disconnect();
+            var t0 = performance.now();
+            (function tick(t) {
+              var p = Math.min(1, (t - t0) / 1800), e = 1 - Math.pow(1 - p, 4);
+              bn.forEach(function (n) { n.textContent = fmt(+n.dataset.count2 * e); });
+              if (p < 1) requestAnimationFrame(tick);
+            })(t0);
+          }, { threshold: 0.4 });
+          bio.observe(big);
+        }
 
-          /* flat-ish: strong ambient, one key light, faces read as clean tones */
-          scene.add(new THREE.AmbientLight(0xffffff, 0.62));
-          var sun = new THREE.DirectionalLight(0xffffff, 0.5);
-          sun.position.set(3, 6, 4);
-          scene.add(sun);
+        if (reduce) return;
 
-          function mat(color) {
-            return new THREE.MeshLambertMaterial({ color: color, flatShading: true, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
-          }
-          var mats = { white: mat(0xffffff), black: mat(0x151515), cyan: mat(0x19c3ff) };
-          var lineDark = new THREE.LineBasicMaterial({ color: 0x000000 });
-          var lineLight = new THREE.LineBasicMaterial({ color: 0x8a8a8a });
+        /* tilt + sheen on game cards */
+        document.querySelectorAll("[data-tilt]").forEach(function (el) {
+          el.addEventListener("pointermove", function (e) {
+            if (e.pointerType !== "mouse") return;
+            var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+            el.classList.add("tilting");
+            el.style.setProperty("--ry", ((x - 0.5) * 5).toFixed(2) + "deg");
+            el.style.setProperty("--rx", ((0.5 - y) * 5).toFixed(2) + "deg");
+            el.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+            el.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+          });
+          el.addEventListener("pointerleave", function () {
+            el.classList.remove("tilting"); el.style.setProperty("--rx", "0deg"); el.style.setProperty("--ry", "0deg");
+          });
+        });
 
-          function piece(geo, m, parent) {
-            var mesh = new THREE.Mesh(geo, m);
-            mesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo, 35), m === mats.black ? lineLight : lineDark));
-            parent.add(mesh);
-            return mesh;
-          }
+        if (!fine) return;
 
-          var group = new THREE.Group();
-          scene.add(group);
-          var studGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.14, small ? 12 : 16);
+        /* magnetic buttons */
+        document.querySelectorAll(".mag").forEach(function (b) {
+          b.addEventListener("pointermove", function (e) {
+            var r = b.getBoundingClientRect();
+            var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+            b.style.transform = "translate(" + (dx * 0.22).toFixed(1) + "px," + (dy * 0.3).toFixed(1) + "px)";
+          });
+          b.addEventListener("pointerleave", function () { b.style.transform = ""; });
+        });
 
-          function block(w, h, d, m, x, y, z, ry) {
-            var b = new THREE.Group();
-            piece(new THREE.BoxGeometry(w, h, d), m, b);
-            for (var i = 0; i < Math.round(w / 0.5); i++) {
-              for (var k = 0; k < Math.round(d / 0.5); k++) {
-                var s = piece(studGeo, m, b);
-                s.position.set(-w / 2 + 0.25 + i * 0.5, h / 2 + 0.07, -d / 2 + 0.25 + k * 0.5);
-              }
-            }
-            b.position.set(x, y, z);
-            b.rotation.y = ry || 0;
-            group.add(b);
-            return b;
-          }
-
-          block(2.0, 0.6, 1.0, mats.white, -0.6, -0.8, 0.1, 0.04);
-          block(1.0, 0.6, 1.0, mats.black, 0.95, -0.8, -0.05, -0.06);
-          block(1.5, 0.6, 1.0, mats.cyan, 0.15, -0.2, 0.0, 0.16);
-          block(1.0, 0.6, 1.0, mats.white, 1.25, -0.2, 0.5, -0.28);
-          block(1.0, 1.2, 1.0, mats.black, -1.5, -0.5, -0.8, 0.1);
-          block(1.0, 0.6, 1.0, mats.white, -1.05, -0.2, 0.7, 0.38);
-          block(1.0, 0.6, 1.0, mats.white, -1.5, 0.4, -0.8, 0.1);
-
-          /* low-poly sword */
-          var sword = new THREE.Group();
-          var blade = piece(new THREE.BoxGeometry(2.4, 0.09, 0.3), mats.white, sword);
-          blade.position.x = 0.6;
-          var tip = piece(new THREE.CylinderGeometry(0, 0.15, 0.36, 4, 1), mats.white, sword);
-          tip.rotation.z = -Math.PI / 2; tip.rotation.x = Math.PI / 4; tip.scale.set(1, 1, 0.42);
-          tip.position.x = 1.98;
-          var guard = piece(new THREE.BoxGeometry(0.18, 0.18, 1.0), mats.black, sword);
-          guard.position.x = -0.68;
-          var handle = piece(new THREE.BoxGeometry(0.7, 0.13, 0.13), mats.black, sword);
-          handle.position.x = -1.1;
-          var pommel = piece(new THREE.BoxGeometry(0.22, 0.22, 0.22), mats.black, sword);
-          pommel.position.x = -1.55;
-          sword.position.set(0.05, 0.34, 0.15);
-          sword.rotation.set(0.0, 0.5, -0.06);
-          group.add(sword);
-
-          /* light contact shadow */
-          var c = document.createElement("canvas");
-          c.width = c.height = 128;
-          var g = c.getContext("2d");
-          var grad = g.createRadialGradient(64, 64, 4, 64, 64, 64);
-          grad.addColorStop(0, "rgba(0,0,0,0.22)");
-          grad.addColorStop(0.6, "rgba(0,0,0,0.07)");
-          grad.addColorStop(1, "rgba(0,0,0,0)");
-          g.fillStyle = grad; g.fillRect(0, 0, 128, 128);
-          var shadow = new THREE.Mesh(
-            new THREE.PlaneGeometry(5.8, 3.6),
-            new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false })
-          );
-          shadow.rotation.x = -Math.PI / 2;
-          shadow.position.y = -1.8;
-          scene.add(shadow);
-
-          group.rotation.x = 0.06;
-
-          function resize() {
-            var w = stage.clientWidth, h = stage.clientHeight;
-            if (!w || !h) return;
-            renderer.setSize(w, h, false);
-            camera.aspect = w / h;
-            camera.position.z = w / h < 0.95 ? 11.5 : 10;
-            camera.updateProjectionMatrix();
-            renderer.render(scene, camera);
-          }
-          resize();
-          window.addEventListener("resize", resize);
-
-          if (reduce) { group.rotation.y = -0.5; renderer.render(scene, camera); return; }
-
-          var tx = 0, ty = 0, px = 0, py = 0;
-          function point(e) {
-            var r = stage.getBoundingClientRect();
-            tx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
-            ty = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2));
-          }
-          window.addEventListener("pointermove", point, { passive: true });
-          stage.addEventListener("pointerdown", point, { passive: true });
-
-          var running = false, visible = true, last = 0, spin = -0.5;
-          function frame(t) {
-            if (!running) return;
-            var dt = Math.min(0.05, (t - (last || t)) / 1000);
-            last = t;
-            spin += dt * 0.2;
-            px += (tx - px) * 0.05; py += (ty - py) * 0.05;
-            group.rotation.y = spin + px * 0.35;
-            group.rotation.x = 0.06 + py * 0.1;
-            group.position.y = Math.sin(t / 1400) * 0.07;
-            shadow.scale.setScalar(1 - Math.sin(t / 1400) * 0.04);
-            renderer.render(scene, camera);
-            requestAnimationFrame(frame);
-          }
-          function start() { if (!running && visible && !document.hidden) { running = true; last = 0; requestAnimationFrame(frame); } }
-          function stop() { running = false; }
-          if ("IntersectionObserver" in window) {
-            new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(stage);
-          }
-          document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
-          renderer.domElement.addEventListener("webglcontextlost", function (e) { e.preventDefault(); stop(); renderer.domElement.remove(); fallback(); });
-          start();
-        })(window.THREE); } catch (e) { fallback(); }
+        /* cursor dot */
+        var dot = document.querySelector(".cursor"), tx = 0, ty = 0, cx = 0, cy = 0, moving = false;
+        document.addEventListener("pointermove", function (e) {
+          if (e.pointerType !== "mouse") return;
+          tx = e.clientX; ty = e.clientY; dot.classList.add("on");
+          dot.classList.toggle("big", !!e.target.closest("a, button"));
+          if (!moving) { moving = true; requestAnimationFrame(loop); }
+        });
+        document.addEventListener("pointerleave", function () { dot.classList.remove("on"); });
+        document.documentElement.addEventListener("mouseleave", function () { dot.classList.remove("on"); });
+        function loop() {
+          cx += (tx - cx) * 0.22; cy += (ty - cy) * 0.22;
+          dot.style.transform = "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)";
+          if (Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1) requestAnimationFrame(loop); else moving = false;
+        }
       })();
     </script>
   </body>
